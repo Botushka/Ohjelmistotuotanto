@@ -1,9 +1,8 @@
 package com.example.ohjelmistotuotanto;
 
-import com.example.ohjelmistotuotanto.NakymaHallinta.AlueMokkiHallintaView;
-import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakashallintaView;
-import com.example.ohjelmistotuotanto.NakymaHallinta.MajoitusvarausHallintaView;
-import com.example.ohjelmistotuotanto.NakymaHallinta.PalveluHallintaView;
+import com.example.ohjelmistotuotanto.NakymaHallinta.*;
+import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaView;
+import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiLisaysView;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -14,7 +13,8 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private BorderPane root;
-    private AlueMokkiHallintaView alueMokkiHallintaView;
+    private MokkiHallintaView mokkiHallintaView;
+    private AlueHallintaView alueHallintaView;
     private PalveluHallintaView palveluHallintaView;
     private MajoitusvarausHallintaView majoitusvarausHallintaView;
     private AsiakashallintaView asiakashallintaView;
@@ -26,7 +26,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         root = new BorderPane();
-        alueMokkiHallintaView = new AlueMokkiHallintaView();
+        alueHallintaView = new AlueHallintaView();
         palveluHallintaView = new PalveluHallintaView();
         majoitusvarausHallintaView = new MajoitusvarausHallintaView();
         asiakashallintaView = new AsiakashallintaView();
@@ -42,11 +42,18 @@ public class Main extends Application {
 
     private MenuBar createMenuBar() {
         MenuBar menuBar = new MenuBar();
+        MokkiLisaysView mokkiLisaysView = new MokkiLisaysView();
+        Menu MokkiMenu = new Menu("Mökki");
+        MenuItem MokkiMenuItem = new MenuItem("Lisäys");
+        MokkiMenuItem.setOnAction(e -> {
+            root.setCenter(mokkiLisaysView);
+        });
+        MokkiMenu.getItems().add(MokkiMenuItem);
 
-        Menu alueMokkiMenu = new Menu("Alue ja Mökki");
-        MenuItem alueMokkiMenuItem = new MenuItem("Hallinta");
-        alueMokkiMenuItem.setOnAction(e -> root.setCenter(alueMokkiHallintaView));
-        alueMokkiMenu.getItems().add(alueMokkiMenuItem);
+        Menu AlueMenu = new Menu("Alue");
+        MenuItem AlueMenuItem = new MenuItem("Hallinta");
+        AlueMenuItem.setOnAction(e -> root.setCenter(alueHallintaView));
+        AlueMenu.getItems().add(AlueMenuItem);
 
         Menu palveluMenu = new Menu("Palvelu");
         MenuItem palveluMenuItem = new MenuItem("Hallinta");
@@ -63,7 +70,7 @@ public class Main extends Application {
         asiakasMenuItem.setOnAction(e -> root.setCenter(asiakashallintaView));
         asiakasMenu.getItems().add(asiakasMenuItem);
 
-        menuBar.getMenus().addAll(alueMokkiMenu, palveluMenu, majoitusvarausMenu, asiakasMenu);
+        menuBar.getMenus().addAll(MokkiMenu, AlueMenu, palveluMenu, majoitusvarausMenu, asiakasMenu);
 
         return menuBar;
     }
