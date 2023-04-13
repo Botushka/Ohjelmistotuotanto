@@ -1,10 +1,13 @@
 package com.example.ohjelmistotuotanto;
 
 import com.example.ohjelmistotuotanto.NakymaHallinta.*;
+import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiLisaysView;
+import com.example.ohjelmistotuotanto.Olioluokat.MokkiOlio;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -42,12 +45,17 @@ public class Main extends Application {
 
     private MenuBar createMenuBar() {
         MenuBar menuBar = new MenuBar();
-        MokkiLisaysView mokkiLisaysView = new MokkiLisaysView();
+        ListView<MokkiOlio> mokkiOlioListView = new ListView<>();
+        // Luo uusi ListView-olio, joka sisältää MokkiOlio-olioita
+
+        ListView<Mokki> mokkiListView = (ListView<Mokki>) (ListView<?>) mokkiOlioListView;
+        MokkiLisaysView mokkiLisaysView = new MokkiLisaysView(mokkiOlioListView);
         Menu MokkiMenu = new Menu("Mökki");
         MenuItem MokkiMenuItem = new MenuItem("Lisäys");
         MokkiMenuItem.setOnAction(e -> {
             root.setCenter(mokkiLisaysView);
         });
+
         MokkiMenu.getItems().add(MokkiMenuItem);
 
         Menu AlueMenu = new Menu("Alue");

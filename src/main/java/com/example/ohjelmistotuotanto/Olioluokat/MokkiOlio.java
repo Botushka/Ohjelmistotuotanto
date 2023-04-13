@@ -1,9 +1,9 @@
 package com.example.ohjelmistotuotanto.Olioluokat;
 
-public class Mokki {
+public class MokkiOlio {
     private int mokki_id;
     private int alue_id;
-    private String postinro;
+    private int postinro;
     private String mokkinimi;
     private String katuosoite;
     private double hinta;
@@ -11,7 +11,7 @@ public class Mokki {
     private int henkilomaara;
     private String varustelu;
 
-    public Mokki(int mokki_id, int alue_id, String postinro, String mokkinimi, String katuosoite, double hinta, String kuvaus, int henkilomaara, String varustelu) {
+    public MokkiOlio(int mokki_id, int alue_id, int postinro, String mokkinimi, String katuosoite, double hinta, String kuvaus, int henkilomaara, String varustelu) {
         this.mokki_id = mokki_id;
         this.alue_id = alue_id;
         this.postinro = postinro;
@@ -21,6 +21,10 @@ public class Mokki {
         this.kuvaus = kuvaus;
         this.henkilomaara = henkilomaara;
         this.varustelu = varustelu;
+    }
+
+    public MokkiOlio() {
+
     }
 
     public int getMokki_id() {
@@ -39,11 +43,11 @@ public class Mokki {
         this.alue_id = alue_id;
     }
 
-    public String getPostinro() {
+    public int getPostinro() {
         return postinro;
     }
 
-    public void setPostinro(String postinro) {
+    public void setPostinro(int postinro) {
         this.postinro = postinro;
     }
 

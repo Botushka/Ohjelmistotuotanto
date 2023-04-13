@@ -1,10 +1,8 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta;
 
+import com.example.ohjelmistotuotanto.Olioluokat.MokkiOlio;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 public class MokkiLisaysView extends VBox {
@@ -18,9 +16,14 @@ public class MokkiLisaysView extends VBox {
     private TextField henkilomaaraField;
     private TextField varusteluField;
     private Button lisaaMokkiButton;
+    private ListView<MokkiOlio> mokkiListView;
 
-    public MokkiLisaysView() {
+    public MokkiLisaysView(ListView<MokkiOlio> mokkiListView) {
+        super();
+        this.mokkiListView = mokkiListView;
+
         Label uusiMokkiLabel = new Label("Uusi mökki");
+
 
         // Luo syötekentät uuden mökin lisäämistä varten
         idField = new TextField();
@@ -51,6 +54,7 @@ public class MokkiLisaysView extends VBox {
         varusteluField = new TextField();
         varusteluField.setPromptText("Varustelu");
 
+
         lisaaMokkiButton = new Button("Lisää");
         lisaaMokkiButton.setOnAction(e -> lisaaMokki());
 
@@ -79,5 +83,32 @@ public class MokkiLisaysView extends VBox {
             alert.showAndWait();
             return;
         }
+
+        // Luo uusi mökki-olio käyttäjän syöttämistä tiedoista
+        Mokki uusiMokki = new Mokki(
+                idField.getText(),
+                Integer.parseInt(alueIdField.getText()),
+                Integer.parseInt(postinroField.getText()),
+                nimiField.getText(),
+                katuosoiteField.getText(),
+                Double.parseDouble(hintaField.getText()),
+                kuvausField.getText(),
+                Integer.parseInt(henkilomaaraField.getText()),
+                varusteluField.getText()
+        );
+
+        // Lisää uusi mökki ListView-näkymään
+        mokkiListView.getItems().add(uusiMokki);
+
+        // Tyhjennä syötekentät
+        idField.clear();
+        alueIdField.clear();
+        postinroField.clear();
+        nimiField.clear();
+        katuosoiteField.clear();
+        hintaField.clear();
+        kuvausField.clear();
+        henkilomaaraField.clear();
+        varusteluField.clear();
     }
 }

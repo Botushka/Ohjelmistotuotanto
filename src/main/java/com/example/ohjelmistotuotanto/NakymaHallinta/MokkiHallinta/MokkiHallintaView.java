@@ -1,6 +1,6 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta;
 
-import com.example.ohjelmistotuotanto.Olioluokat.Mokki;
+import com.example.ohjelmistotuotanto.Olioluokat.MokkiOlio;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class MokkiHallintaView extends VBox {
-    private TableView<Mokki> mokkiTable;
+    private TableView<MokkiOlio> mokkiTable;
     private TextField idField;
     private TextField alueIdField;
     private TextField postinroField;
@@ -29,23 +29,23 @@ public class MokkiHallintaView extends VBox {
 
         // Luo taulukko kaikille mökeille
         mokkiTable = new TableView<>();
-        TableColumn<Mokki, Integer> idColumn = new TableColumn<>("ID");
+        TableColumn<MokkiOlio, Integer> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("mokki_id"));
-        TableColumn<Mokki, Integer> alueIdColumn = new TableColumn<>("Alue ID");
+        TableColumn<MokkiOlio, Integer> alueIdColumn = new TableColumn<>("Alue ID");
         alueIdColumn.setCellValueFactory(new PropertyValueFactory<>("alue_id"));
-        TableColumn<Mokki, String> postinroColumn = new TableColumn<>("Postinumero");
+        TableColumn<MokkiOlio, String> postinroColumn = new TableColumn<>("Postinumero");
         postinroColumn.setCellValueFactory(new PropertyValueFactory<>("postinro"));
-        TableColumn<Mokki, String> nimiColumn = new TableColumn<>("Nimi");
+        TableColumn<MokkiOlio, String> nimiColumn = new TableColumn<>("Nimi");
         nimiColumn.setCellValueFactory(new PropertyValueFactory<>("mokkinimi"));
-        TableColumn<Mokki, String> katuosoiteColumn = new TableColumn<>("Katuosoite");
+        TableColumn<MokkiOlio, String> katuosoiteColumn = new TableColumn<>("Katuosoite");
         katuosoiteColumn.setCellValueFactory(new PropertyValueFactory<>("katuosoite"));
-        TableColumn<Mokki, Double> hintaColumn = new TableColumn<>("Hinta");
+        TableColumn<MokkiOlio, Double> hintaColumn = new TableColumn<>("Hinta");
         hintaColumn.setCellValueFactory(new PropertyValueFactory<>("hinta"));
-        TableColumn<Mokki, String> kuvausColumn = new TableColumn<>("Kuvaus");
+        TableColumn<MokkiOlio, String> kuvausColumn = new TableColumn<>("Kuvaus");
         kuvausColumn.setCellValueFactory(new PropertyValueFactory<>("kuvaus"));
-        TableColumn<Mokki, Integer> henkilomaaraColumn = new TableColumn<>("Henkilömäärä");
+        TableColumn<MokkiOlio, Integer> henkilomaaraColumn = new TableColumn<>("Henkilömäärä");
         henkilomaaraColumn.setCellValueFactory(new PropertyValueFactory<>("henkilomaara"));
-        TableColumn<Mokki, String> varusteluColumn = new TableColumn<>("Varustelu");
+        TableColumn<MokkiOlio, String> varusteluColumn = new TableColumn<>("Varustelu");
         varusteluColumn.setCellValueFactory(new PropertyValueFactory<>("varustelu"));
         mokkiTable.getColumns().addAll(idColumn, alueIdColumn, postinroColumn, nimiColumn, katuosoiteColumn,
                 hintaColumn, kuvausColumn, henkilomaaraColumn, varusteluColumn);
