@@ -2,17 +2,23 @@ package com.example.ohjelmistotuotanto;
 
 import com.example.ohjelmistotuotanto.NakymaHallinta.*;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
+import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiLisaysView;
 import com.example.ohjelmistotuotanto.Olioluokat.MokkiOlio;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Main extends Application {
     private BorderPane root;
@@ -37,7 +43,7 @@ public class Main extends Application {
         MenuBar menuBar = createMenuBar();
         root.setTop(menuBar);
 
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 1200, 1000);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Varausjärjestelmä");
         primaryStage.show();
@@ -47,16 +53,22 @@ public class Main extends Application {
         MenuBar menuBar = new MenuBar();
         ListView<MokkiOlio> mokkiOlioListView = new ListView<>();
         // Luo uusi ListView-olio, joka sisältää MokkiOlio-olioita
-
         ListView<Mokki> mokkiListView = (ListView<Mokki>) (ListView<?>) mokkiOlioListView;
         MokkiLisaysView mokkiLisaysView = new MokkiLisaysView(mokkiOlioListView);
         Menu MokkiMenu = new Menu("Mökki");
         MenuItem MokkiMenuItem = new MenuItem("Lisäys");
+        MenuItem MokkiMenuItem2 = new MenuItem("Hallinta");
+        MokkiHallintaView mokkiHallintaView = new MokkiHallintaView();
+
+        MokkiMenuItem2.setOnAction(e -> {
+            root.setCenter(mokkiHallintaView);
+        });
         MokkiMenuItem.setOnAction(e -> {
             root.setCenter(mokkiLisaysView);
         });
 
-        MokkiMenu.getItems().add(MokkiMenuItem);
+
+        MokkiMenu.getItems().addAll(MokkiMenuItem, MokkiMenuItem2);
 
         Menu AlueMenu = new Menu("Alue");
         MenuItem AlueMenuItem = new MenuItem("Hallinta");

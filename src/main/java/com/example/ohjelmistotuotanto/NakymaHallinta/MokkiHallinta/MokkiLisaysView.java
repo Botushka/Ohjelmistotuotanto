@@ -24,7 +24,6 @@ public class MokkiLisaysView extends VBox {
 
         Label uusiMokkiLabel = new Label("Uusi mökki");
 
-
         // Luo syötekentät uuden mökin lisäämistä varten
         idField = new TextField();
         idField.setPromptText("ID");
@@ -69,6 +68,9 @@ public class MokkiLisaysView extends VBox {
         this.getChildren().add(lisaysBox);
     }
 
+    private void poistamokki(){
+
+    }
     private void lisaaMokki() {
         // Tarkista, että kaikki kentät on täytetty
         if (idField.getText().isEmpty() || alueIdField.getText().isEmpty() ||
@@ -83,6 +85,7 @@ public class MokkiLisaysView extends VBox {
             alert.showAndWait();
             return;
         }
+
 
         // Luo uusi mökki-olio käyttäjän syöttämistä tiedoista
         Mokki uusiMokki = new Mokki(
