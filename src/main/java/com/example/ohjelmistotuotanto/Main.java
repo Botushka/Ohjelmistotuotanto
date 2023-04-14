@@ -43,16 +43,16 @@ public class Main extends Application {
         MenuBar menuBar = createMenuBar();
         root.setTop(menuBar);
 
-        Scene scene = new Scene(root, 1200, 1000);
+        Scene scene = new Scene(root, 1400, 1000);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Varausjärjestelmä");
+        root.setCenter(new MokkiHallintaView());
         primaryStage.show();
     }
 
     private MenuBar createMenuBar() {
         MenuBar menuBar = new MenuBar();
         ListView<MokkiOlio> mokkiOlioListView = new ListView<>();
-        // Luo uusi ListView-olio, joka sisältää MokkiOlio-olioita
         ListView<Mokki> mokkiListView = (ListView<Mokki>) (ListView<?>) mokkiOlioListView;
         MokkiLisaysView mokkiLisaysView = new MokkiLisaysView(mokkiOlioListView);
         Menu MokkiMenu = new Menu("Mökki");
@@ -68,7 +68,7 @@ public class Main extends Application {
         });
 
 
-        MokkiMenu.getItems().addAll(MokkiMenuItem, MokkiMenuItem2);
+        MokkiMenu.getItems().addAll(MokkiMenuItem2, MokkiMenuItem);
 
         Menu AlueMenu = new Menu("Alue");
         MenuItem AlueMenuItem = new MenuItem("Hallinta");
