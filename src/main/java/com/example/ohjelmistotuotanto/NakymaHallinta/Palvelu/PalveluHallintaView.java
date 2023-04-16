@@ -1,4 +1,4 @@
-package com.example.ohjelmistotuotanto.NakymaHallinta;
+package com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu;
 
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;

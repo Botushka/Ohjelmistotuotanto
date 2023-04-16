@@ -1,28 +1,20 @@
 package com.example.ohjelmistotuotanto;
 
-import com.example.ohjelmistotuotanto.NakymaHallinta.*;
-import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueHallintaView;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Asiakas.AsiakashallintaView;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusvarausHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
-import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaView;
-import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiLisaysView;
-import com.example.ohjelmistotuotanto.Olioluokat.MokkiOlio;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu.PalveluHallintaView;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Main extends Application {
     private BorderPane root;
-    private MokkiHallintaView mokkiHallintaView;
     private AlueHallintaView alueHallintaView;
     private PalveluHallintaView palveluHallintaView;
     private MajoitusvarausHallintaView majoitusvarausHallintaView;
@@ -46,25 +38,22 @@ public class Main extends Application {
         Scene scene = new Scene(root, 1400, 1000);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Varausjärjestelmä");
-        root.setCenter(new MokkiHallintaView());
+        //root.setCenter(new MokkiHallintaController());
         primaryStage.show();
     }
 
     private MenuBar createMenuBar() {
         MenuBar menuBar = new MenuBar();
-        ListView<MokkiOlio> mokkiOlioListView = new ListView<>();
-        ListView<Mokki> mokkiListView = (ListView<Mokki>) (ListView<?>) mokkiOlioListView;
-        MokkiLisaysView mokkiLisaysView = new MokkiLisaysView(mokkiOlioListView);
         Menu MokkiMenu = new Menu("Mökki");
         MenuItem MokkiMenuItem = new MenuItem("Lisäys");
         MenuItem MokkiMenuItem2 = new MenuItem("Hallinta");
-        MokkiHallintaView mokkiHallintaView = new MokkiHallintaView();
+        MokkiHallintaController mokkiHallintaView = new MokkiHallintaController();
 
         MokkiMenuItem2.setOnAction(e -> {
             root.setCenter(mokkiHallintaView);
         });
         MokkiMenuItem.setOnAction(e -> {
-            root.setCenter(mokkiLisaysView);
+            root.setCenter(mokkiHallintaView);
         });
 
 

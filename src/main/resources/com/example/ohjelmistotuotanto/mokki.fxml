@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="917.0" prefWidth="1349.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="917.0" prefWidth="1349.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
       <GridPane layoutX="7.0" layoutY="408.0" prefHeight="510.0" prefWidth="1342.0">
         <columnConstraints>
@@ -16,17 +25,17 @@
           <RowConstraints maxHeight="478.0" minHeight="10.0" prefHeight="448.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TableView prefHeight="454.0" prefWidth="1342.0" GridPane.rowIndex="1">
+            <TableView fx:id="mokkiTable" prefHeight="454.0" prefWidth="1342.0" GridPane.rowIndex="1">
               <columns>
-                <TableColumn prefWidth="119.0" text="mokki_ID" />
-                <TableColumn prefWidth="142.0" text="alue_ID" />
-                  <TableColumn prefWidth="142.0" text="postinro" />
-                  <TableColumn prefWidth="142.0" text="mokki nimi" />
-                  <TableColumn prefWidth="142.0" text="katuosoite" />
-                  <TableColumn prefWidth="142.0" text="hinta" />
-                  <TableColumn prefWidth="142.0" text="henkilömäärä" />
-                  <TableColumn prefWidth="142.0" text="varustelu" />
-                  <TableColumn prefWidth="225.0" text="Kuvaus" />
+                <TableColumn fx:id="mokkiIdColumn" prefWidth="119.0" text="mokki_ID" />
+                <TableColumn fx:id="alueIdColumn" prefWidth="142.0" text="alue_ID" />
+                  <TableColumn fx:id="postinroColumn" prefWidth="142.0" text="postinro" />
+                  <TableColumn fx:id="nimiColumn" prefWidth="142.0" text="nimi" />
+                  <TableColumn fx:id="katuosoiteColumn" prefWidth="142.0" text="katuosoite" />
+                  <TableColumn fx:id="hintaColumn" prefWidth="142.0" text="hinta" />
+                  <TableColumn fx:id="henkilomaaraColumn" prefWidth="142.0" text="henkilömäärä" />
+                  <TableColumn fx:id="varusteluColumn" prefWidth="142.0" text="varustelu" />
+                  <TableColumn fx:id="kuvausColumn" prefWidth="225.0" text="Kuvaus" />
               </columns>
             </TableView>
             <Pane prefHeight="31.0" prefWidth="1342.0">
