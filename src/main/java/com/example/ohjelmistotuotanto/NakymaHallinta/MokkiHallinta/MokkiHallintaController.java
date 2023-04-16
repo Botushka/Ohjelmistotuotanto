@@ -4,9 +4,12 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -50,11 +53,22 @@ public class MokkiHallintaController extends BorderPane {
     public TableColumn<Mokki, String> kuvausColumn;
 
     @FXML
-    public TextField hakukentta;
+    public Button lisaanappula;
+    public TextField haemokki;
+    public TextField kuvauskentta;
+    public TextField varustelukentta;
+    public TextField hmaarakentta;
+    public TextField osoitekentta;
+    public TextField nimikentta;
+    public TextField postikentta;
+    public TextField aluekentta;
+    public TextField mokkikentta;
+    public TextField hintakentta;
+    private List<Mokki> mokit = new ArrayList<>();
 
     private void naytaMokit(List<Mokki> mokit) {
         if (mokkiTable != null) {
-            mokkiTable.getItems().addAll(mokit);
+            mokkiTable.getItems().setAll(mokit);
         }
     }
 
@@ -71,9 +85,34 @@ public class MokkiHallintaController extends BorderPane {
         varusteluColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVarustelu()));
         kuvausColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKuvaus()));
 
+
         List<Mokki> mokit = haeMokitTietokannasta();
         naytaMokit(mokit);
         // Hae mokit tietokannasta ja lisää ne taulukkoon
+
+        haemokki.textProperty().addListener((observable, oldValue, newValue) -> {
+            String hakusana = newValue.toLowerCase();
+            if (hakusana.trim().isEmpty()) {
+                naytaMokit(haeMokitTietokannasta());
+            } else {
+                List<Mokki> hakutulokset = new ArrayList<>();
+                for (Mokki mokki : haeMokitTietokannasta()) {
+                    if (mokki.getNimi().toLowerCase().contains(hakusana) ||
+                            mokki.getMokkiId().toLowerCase().contains(hakusana) ||
+                            String.valueOf(mokki.getAlueId()).toLowerCase().contains(hakusana) ||
+                            String.valueOf(mokki.getPostinro()).toLowerCase().contains(hakusana) ||
+                            mokki.getKatuosoite().toLowerCase().contains(hakusana) ||
+                            String.valueOf(mokki.getHinta()).toLowerCase().contains(hakusana) ||
+                            String.valueOf(mokki.getHenkilomaara()).toLowerCase().contains(hakusana) ||
+                            mokki.getVarustelu().toLowerCase().contains(hakusana) ||
+                            mokki.getKuvaus().toLowerCase().contains(hakusana)) {
+                        hakutulokset.add(mokki);
+                    }
+                }
+                naytaMokit(hakutulokset);
+            }
+        });
+
     }
 
     private List<Mokki> haeMokitTietokannasta() {
@@ -82,22 +121,52 @@ public class MokkiHallintaController extends BorderPane {
         mokit.add(new Mokki("1", 1, 12345, "Mökki1", "Katu1", 100.0, 2, "Hyvä", "Luksusmökki järven rannalla"));
         mokit.add(new Mokki("2", 2, 54321, "Mökki2", "Katu2", 200.0, 3, "Hyvä", "Kaunis mökki metsän keskellä"));
         return mokit;
+
     }
 
-
-    @FXML
-    private void lisaaUusi() {
-        // Tässä voit avata uuden ikkunan tai vaihtoehtoisesti vaihtaa näkymää käyttäen Scene:n root-elementtiä.
-    }
 
     public MokkiHallintaController() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ohjelmistotuotanto/mokki.fxml"));
         loader.setController(this);
-
         try {
             setCenter(loader.load());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void lisaatieto(ActionEvent event) {
+        Mokki newMokki = new Mokki(mokkikentta.getText(), Integer.parseInt(aluekentta.getText()), Integer.parseInt(postikentta.getText()),
+                nimikentta.getText(), osoitekentta.getText(), Double.parseDouble(hintakentta.getText()),
+                Integer.parseInt(hmaarakentta.getText()), varustelukentta.getText(), kuvauskentta.getText());
+
+        mokit.add(newMokki);
+        mokkikentta.clear();
+        aluekentta.clear();
+        postikentta.clear();
+        nimikentta.clear();
+        osoitekentta.clear();
+        hintakentta.clear();
+        hmaarakentta.clear();
+        varustelukentta.clear();
+        kuvauskentta.clear();
+
+        // Show the updated list of Mokki objects in the table
+        naytaMokit(mokit);
+    }
+
+    @FXML
+    public void poistatieto(ActionEvent event) {
+        Mokki selectedMokki = mokkiTable.getSelectionModel().getSelectedItem();
+        if (selectedMokki != null) {
+            TableView.TableViewSelectionModel<Mokki> selectionModel = mokkiTable.getSelectionModel();
+            ObservableList<Mokki> tableItems = mokkiTable.getItems();
+            int selectedIndex = selectionModel.getSelectedIndex();
+            tableItems.remove(selectedIndex);
+            mokkiTable.setItems(tableItems);
+            mokkiTable.refresh();
+        }
+    }
+
 }
