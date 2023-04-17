@@ -1,6 +1,6 @@
 package com.example.ohjelmistotuotanto;
 
-import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueHallintaView;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Asiakas.AsiakashallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusvarausHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private BorderPane root;
-    private AlueHallintaView alueHallintaView;
+    private AlueHallintaController alueHallintaView;
     private PalveluHallintaView palveluHallintaView;
     private MajoitusvarausHallintaView majoitusvarausHallintaView;
     private AsiakashallintaView asiakashallintaView;
@@ -27,7 +27,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         root = new BorderPane();
-        alueHallintaView = new AlueHallintaView();
         palveluHallintaView = new PalveluHallintaView();
         majoitusvarausHallintaView = new MajoitusvarausHallintaView();
         asiakashallintaView = new AsiakashallintaView();
@@ -45,23 +44,21 @@ public class Main extends Application {
     private MenuBar createMenuBar() {
         MenuBar menuBar = new MenuBar();
         Menu MokkiMenu = new Menu("Mökki");
-        MenuItem MokkiMenuItem = new MenuItem("Lisäys");
         MenuItem MokkiMenuItem2 = new MenuItem("Hallinta");
         MokkiHallintaController mokkiHallintaView = new MokkiHallintaController();
 
         MokkiMenuItem2.setOnAction(e -> {
             root.setCenter(mokkiHallintaView);
         });
-        MokkiMenuItem.setOnAction(e -> {
-            root.setCenter(mokkiHallintaView);
-        });
 
 
-        MokkiMenu.getItems().addAll(MokkiMenuItem2, MokkiMenuItem);
+
+        MokkiMenu.getItems().addAll(MokkiMenuItem2);
 
         Menu AlueMenu = new Menu("Alue");
         MenuItem AlueMenuItem = new MenuItem("Hallinta");
-        AlueMenuItem.setOnAction(e -> root.setCenter(alueHallintaView));
+        AlueHallintaController alueHallintaController = new AlueHallintaController();
+        AlueMenuItem.setOnAction(e -> root.setCenter(alueHallintaController));
         AlueMenu.getItems().add(AlueMenuItem);
 
         Menu palveluMenu = new Menu("Palvelu");
