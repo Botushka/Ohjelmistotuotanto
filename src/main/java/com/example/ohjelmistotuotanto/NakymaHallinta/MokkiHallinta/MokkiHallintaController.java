@@ -54,6 +54,7 @@ public class MokkiHallintaController extends BorderPane {
 
     @FXML
     public Button lisaanappula;
+    public Button muokkaanappula;
     public TextField haemokki;
     public TextField kuvauskentta;
     public TextField varustelukentta;
@@ -154,6 +155,10 @@ public class MokkiHallintaController extends BorderPane {
 
         // Show the updated list of Mokki objects in the table
         naytaMokit(mokit);
+    }
+    @FXML
+    void muokkaaMokki(ActionEvent event) {
+
     }
 
     @FXML
