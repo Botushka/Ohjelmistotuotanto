@@ -1,7 +1,8 @@
 package com.example.ohjelmistotuotanto;
 
 import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueHallintaController;
-import com.example.ohjelmistotuotanto.NakymaHallinta.Asiakas.AsiakashallintaView;
+import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakasHallintaController;
+import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakashallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusvarausHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu.PalveluHallintaView;
@@ -73,7 +74,8 @@ public class Main extends Application {
 
         Menu asiakasMenu = new Menu("Asiakashallinta");
         MenuItem asiakasMenuItem = new MenuItem("Hallinta");
-        asiakasMenuItem.setOnAction(e -> root.setCenter(asiakashallintaView));
+        AsiakasHallintaController asiakasHallintaControlle = new AsiakasHallintaController();
+        asiakasMenuItem.setOnAction(e -> root.setCenter(asiakasHallintaControlle));
         asiakasMenu.getItems().add(asiakasMenuItem);
 
         menuBar.getMenus().addAll(MokkiMenu, AlueMenu, palveluMenu, majoitusvarausMenu, asiakasMenu);
