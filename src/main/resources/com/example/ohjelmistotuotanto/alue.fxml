@@ -10,34 +10,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox layoutX="149.0" layoutY="103.0" prefHeight="298.0" prefWidth="162.0">
-         <children>
-            <Pane prefHeight="298.0" prefWidth="162.0" style="-fx-border-color: black;">
-               <children>
-                  <TextField layoutX="7.0" layoutY="35.0" promptText="Alue ID" style="-fx-border-color: gray;" />
-                  <TextField layoutX="7.0" layoutY="82.0" promptText="Alue nimi" style="-fx-border-color: gray;" />
-                  <Button layoutX="49.0" layoutY="137.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #7156DD;" text="Lisää" textFill="#f7f7f7" />
-                  <Button layoutX="49.0" layoutY="179.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #7156DD;" text="Poista" textFill="WHITE" />
-               </children>
-            </Pane>
-         </children>
-      </VBox>
-      <TableView layoutX="312.0" layoutY="103.0" prefHeight="298.0" prefWidth="152.0">
+      <VBox layoutX="149.0" layoutY="103.0" prefHeight="298.0" prefWidth="162.0" />
+      <TableView fx:id="alueTable" layoutX="499.0" layoutY="191.0" prefHeight="597.0" prefWidth="372.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="alue_id" />
-          <TableColumn prefWidth="75.0" text="alue nimi" />
+          <TableColumn fx:id="idalueColumn" prefWidth="163.0" text="alue_id" />
+          <TableColumn fx:id="nimiAlueColumn" prefWidth="208.0" text="alue nimi" />
         </columns>
       </TableView>
-      <Pane layoutX="1.0" layoutY="-1.0" prefHeight="104.0" prefWidth="600.0" style="-fx-background-color: #7156DD;">
+      <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="193.0" prefWidth="1068.0" style="-fx-background-color: #7156DD;">
          <children>
-            <Label layoutX="192.0" layoutY="33.0" prefHeight="38.0" prefWidth="215.0" text="Alueiden hallinta" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="396.0" layoutY="78.0" prefHeight="38.0" prefWidth="215.0" text="Alueiden hallinta" textFill="WHITE">
                <font>
                   <Font size="26.0" />
                </font>
             </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="149.0" layoutY="191.0" prefHeight="597.0" prefWidth="348.0" style="-fx-border-color: black;">
+         <children>
+            <TextField fx:id="alueidKentta" layoutX="99.0" layoutY="41.0" promptText="Alue ID" style="-fx-border-color: gray;" />
+            <TextField fx:id="aluenimiKentta" layoutX="99.0" layoutY="103.0" promptText="Alue nimi" style="-fx-border-color: gray;" />
+            <Button fx:id="addnappi" layoutX="70.0" layoutY="181.0" mnemonicParsing="false" onAction="#addAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #7156DD;" text="Lisää" textFill="#f7f7f7" />
+            <Button fx:id="delnappi" layoutX="155.0" layoutY="181.0" mnemonicParsing="false" onAction="#delAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #7156DD;" text="Poista" textFill="WHITE" />
+            <Button fx:id="editNappi" layoutX="250.0" layoutY="181.0" mnemonicParsing="false" onAction="#editAlue" style="-fx-background-color: #7156DD;" text="Muokka" textFill="WHITE" />
+            <TextField fx:id="aluehaeKentta" layoutX="109.0" layoutY="257.0" promptText="Hae..." style="-fx-border-color: gray;" />
          </children>
       </Pane>
    </children>

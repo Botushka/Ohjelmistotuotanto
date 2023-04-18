@@ -1,11 +1,14 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta;
 
+import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -54,6 +57,7 @@ public class MokkiHallintaController extends BorderPane {
 
     @FXML
     public Button lisaanappula;
+    @FXML
     public Button muokkaanappula;
     public TextField haemokki;
     public TextField kuvauskentta;
@@ -68,9 +72,8 @@ public class MokkiHallintaController extends BorderPane {
     private List<Mokki> mokit = new ArrayList<>();
 
     private void naytaMokit(List<Mokki> mokit) {
-        if (mokkiTable != null) {
-            mokkiTable.getItems().setAll(mokit);
-        }
+        ObservableList<Mokki> mokkiData = FXCollections.observableArrayList(mokit);
+        mokkiTable.setItems(mokkiData);
     }
 
     @FXML
@@ -142,7 +145,9 @@ public class MokkiHallintaController extends BorderPane {
                 nimikentta.getText(), osoitekentta.getText(), Double.parseDouble(hintakentta.getText()),
                 Integer.parseInt(hmaarakentta.getText()), varustelukentta.getText(), kuvauskentta.getText());
 
-        mokit.add(newMokki);
+        ObservableList<Mokki> mokitData = mokkiTable.getItems();
+
+        mokitData.add(newMokki);
         mokkikentta.clear();
         aluekentta.clear();
         postikentta.clear();
@@ -153,13 +158,19 @@ public class MokkiHallintaController extends BorderPane {
         varustelukentta.clear();
         kuvauskentta.clear();
 
-        // Show the updated list of Mokki objects in the table
-        naytaMokit(mokit);
+
+        naytaMokit(mokitData);
     }
+
+    private EventHandler<ActionEvent> alkuperaisetMuokkausKasittelija;
     @FXML
-    void muokkaaMokki(ActionEvent event) {
+    private void muokkaaMokki() {
 
     }
+
+    private void muokkaaMokki(ActionEvent event) {
+    }
+
 
     @FXML
     public void poistatieto(ActionEvent event) {
