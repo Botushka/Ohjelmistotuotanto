@@ -21,6 +21,7 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class MokkiHallintaController extends BorderPane {
@@ -88,19 +89,19 @@ public class MokkiHallintaController extends BorderPane {
         henkilomaaraColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getHenkilomaara()).asObject());
         varusteluColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVarustelu()));
         kuvausColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKuvaus()));
+        ObservableList<Mokki> mokkiData = FXCollections.observableArrayList(haeMokitTietokannasta());
+        mokkiTable.setItems(mokkiData);
 
-
-        List<Mokki> mokit = haeMokitTietokannasta();
-        naytaMokit(mokit);
+        naytaMokit(mokkiData);
         // Hae mokit tietokannasta ja lisää ne taulukkoon
 
         haemokki.textProperty().addListener((observable, oldValue, newValue) -> {
             String hakusana = newValue.toLowerCase();
             if (hakusana.trim().isEmpty()) {
-                naytaMokit(haeMokitTietokannasta());
+                mokkiTable.setItems(mokkiData);
             } else {
                 List<Mokki> hakutulokset = new ArrayList<>();
-                for (Mokki mokki : haeMokitTietokannasta()) {
+                for (Mokki mokki : mokkiData) {
                     if (mokki.getNimi().toLowerCase().contains(hakusana) ||
                             mokki.getMokkiId().toLowerCase().contains(hakusana) ||
                             String.valueOf(mokki.getAlueId()).toLowerCase().contains(hakusana) ||
@@ -113,10 +114,9 @@ public class MokkiHallintaController extends BorderPane {
                         hakutulokset.add(mokki);
                     }
                 }
-                naytaMokit(hakutulokset);
+                mokkiTable.setItems(FXCollections.observableArrayList(hakutulokset));
             }
         });
-
     }
 
     private List<Mokki> haeMokitTietokannasta() {
@@ -146,8 +146,9 @@ public class MokkiHallintaController extends BorderPane {
                 Integer.parseInt(hmaarakentta.getText()), varustelukentta.getText(), kuvauskentta.getText());
 
         ObservableList<Mokki> mokitData = mokkiTable.getItems();
-
         mokitData.add(newMokki);
+
+        // Clear the input fields
         mokkikentta.clear();
         aluekentta.clear();
         postikentta.clear();
@@ -157,7 +158,6 @@ public class MokkiHallintaController extends BorderPane {
         hmaarakentta.clear();
         varustelukentta.clear();
         kuvauskentta.clear();
-
 
         naytaMokit(mokitData);
     }

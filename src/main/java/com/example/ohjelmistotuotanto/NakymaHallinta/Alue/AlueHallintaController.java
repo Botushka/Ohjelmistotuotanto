@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -52,30 +53,30 @@ public class AlueHallintaController extends BorderPane {
         idalueColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAlue_id()).asObject());
         nimiAlueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getArea_nimi()));
 
-        List<AlueOlio> alueOlio = haeMokitTietokannasta();
-        naytaAlue(alueOlio);
+        ObservableList<AlueOlio> alueetData = FXCollections.observableArrayList(haeAlueetTietokannasta());
+        alueTable.setItems(alueetData);
+
         // Hae mokit tietokannasta ja lisää ne taulukkoon
 
         aluehaeKentta.textProperty().addListener((observable, oldValue, newValue) -> {
             String hakusana = newValue.toLowerCase();
             if (hakusana.trim().isEmpty()) {
-                naytaAlue(haeMokitTietokannasta());
+                alueTable.setItems(alueetData);
             } else {
                 List<AlueOlio> hakutulokset = new ArrayList<>();
-                for (AlueOlio alueolio : haeMokitTietokannasta()) {
+                for (AlueOlio alueolio : alueetData) {
                     if (String.valueOf(alueolio.getAlue_id()).toLowerCase().contains(hakusana) ||
                             alueolio.getArea_nimi().toLowerCase().contains(hakusana))
                     {
                         hakutulokset.add(alueolio);
                     }
                 }
-                naytaAlue(hakutulokset);
+                alueTable.setItems(FXCollections.observableArrayList(hakutulokset));
             }
         });
-
     }
 
-    private List<AlueOlio> haeMokitTietokannasta() {
+    private List<AlueOlio> haeAlueetTietokannasta() {
         // Tämä on vain esimerkki, voit korvata tämän oikealla tietokannan käyttöä hoitavalla koodilla
         List<AlueOlio> alueet = new ArrayList<>();
         alueet.add(new AlueOlio(1, "Kuopio"));
@@ -95,15 +96,28 @@ public class AlueHallintaController extends BorderPane {
     }
     @FXML
     private void addAlue(ActionEvent event) {
-        AlueOlio newAlue = new AlueOlio(Integer.parseInt(alueidKentta.getText()), aluenimiKentta.getText());
-
+        // Generate unique idalue
+        int newId = 1;
         ObservableList<AlueOlio> alueetData = alueTable.getItems();
+        if (!alueetData.isEmpty()) {
+            // Sort the list by idalue in descending order
+            alueetData.sort(Comparator.comparingInt(AlueOlio::getAlue_id).reversed());
+            // Get the highest idalue in the list and add 1 to generate a new idalue
+            newId = alueetData.get(0).getAlue_id() + 1;
+        }
+
+        // Create a new AlueOlio object with the generated idalue and the entered aluenimi
+        AlueOlio newAlue = new AlueOlio(newId, aluenimiKentta.getText());
+
+        // Add the new AlueOlio to the table
         alueetData.add(newAlue);
         aluenimiKentta.clear();
         alueidKentta.clear();
 
+        // Refresh the table view
         naytaAlue(alueetData);
     }
+
     @FXML
     private void delAlue(ActionEvent event) {
         AlueOlio selectedMokki = alueTable.getSelectionModel().getSelectedItem();

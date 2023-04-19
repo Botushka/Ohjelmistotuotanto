@@ -30,7 +30,7 @@
       </Pane>
       <Pane layoutX="149.0" layoutY="191.0" prefHeight="597.0" prefWidth="348.0" style="-fx-border-color: black;">
          <children>
-            <TextField fx:id="alueidKentta" layoutX="99.0" layoutY="41.0" promptText="Alue ID" style="-fx-border-color: gray;" />
+            <TextField fx:id="alueidKentta" editable="false" layoutX="99.0" layoutY="41.0" promptText="Alue ID (Auto generointi)" style="-fx-border-color: gray;" />
             <TextField fx:id="aluenimiKentta" layoutX="99.0" layoutY="103.0" promptText="Alue nimi" style="-fx-border-color: gray;" />
             <Button fx:id="addnappi" layoutX="70.0" layoutY="181.0" mnemonicParsing="false" onAction="#addAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #7156DD;" text="Lisää" textFill="#f7f7f7" />
             <Button fx:id="delnappi" layoutX="155.0" layoutY="181.0" mnemonicParsing="false" onAction="#delAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #7156DD;" text="Poista" textFill="WHITE" />
