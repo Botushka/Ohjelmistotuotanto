@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="802.0" prefWidth="1052.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TableView fx:id="palvelutable" layoutX="343.0" layoutY="228.0" prefHeight="546.0" prefWidth="694.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="Palvelu ID" />
+          <TableColumn prefWidth="75.0" text="Alue ID" />
+            <TableColumn prefWidth="75.0" text="Nimi" />
+            <TableColumn prefWidth="75.0" text="Tyyppi" />
+            <TableColumn prefWidth="75.0" text="Kuvaus" />
+            <TableColumn prefWidth="75.0" text="Hinta" />
+            <TableColumn prefWidth="75.0" text="Alv." />
+        </columns>
+      </TableView>
+      <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="60.0" layoutY="256.0" prefHeight="437.0" prefWidth="264.0" spacing="25.0">
+         <children>
+            <TextField fx:id="palveluid" promptText="Palvelu ID" />
+            <TextField fx:id="alueid" promptText="Alue ID" />
+            <TextField fx:id="palvelunimi" promptText="Nimi" />
+            <TextField fx:id="palvelutyyppi" promptText="Tyyppi" />
+            <TextField fx:id="palvelukuvaus" promptText="Kuvaus" />
+            <TextField fx:id="palveluhinta" promptText="Hinta" />
+            <TextField fx:id="palvelualv" promptText="Alv." />
+            <Button fx:id="lisaapalvelubtn" alignment="CENTER" mnemonicParsing="false" onAction="#lisaapalvelu" prefHeight="29.0" prefWidth="159.0" style="-fx-background-color: #7156DD;" text="Lisää" textFill="WHITE" />
+         </children>
+      </VBox>
+      <Pane layoutX="338.0" layoutY="127.0" prefHeight="80.0" prefWidth="587.0">
+         <children>
+            <TextField fx:id="haepalvelu" layoutX="29.0" layoutY="28.0" prefHeight="26.0" prefWidth="223.0" promptText="Hae palvelua" />
+            <Button fx:id="poistapalvelubtn" layoutX="312.0" layoutY="29.0" mnemonicParsing="false" onAction="#poistapalvelu" style="-fx-background-color: #7156DD;" text="Poista" textFill="WHITE" />
+            <Button fx:id="tallennapalvelubtn" layoutX="433.0" layoutY="29.0" mnemonicParsing="false" onAction="#tallennapalvelu" style="-fx-background-color: #7156DD;" text="Tallenna" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane layoutX="-2.0" layoutY="-1.0" prefHeight="139.0" prefWidth="1054.0" style="-fx-background-color: #7156DD;">
+         <children>
+            <Label layoutX="424.0" layoutY="50.0" text="Palveluiden hallinta" textFill="WHITE">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

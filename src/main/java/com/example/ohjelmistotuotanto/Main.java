@@ -5,7 +5,7 @@ import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakasHall
 import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakashallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusvarausHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
-import com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu.PalveluHallintaView;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu.PalveluHallintaController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -17,7 +17,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private BorderPane root;
     private AlueHallintaController alueHallintaView;
-    private PalveluHallintaView palveluHallintaView;
+    private PalveluHallintaController palveluHallintaView;
     private MajoitusvarausHallintaView majoitusvarausHallintaView;
     private AsiakashallintaView asiakashallintaView;
 
@@ -28,7 +28,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         root = new BorderPane();
-        palveluHallintaView = new PalveluHallintaView();
+        palveluHallintaView = new PalveluHallintaController();
         majoitusvarausHallintaView = new MajoitusvarausHallintaView();
         asiakashallintaView = new AsiakashallintaView();
 
@@ -64,7 +64,8 @@ public class Main extends Application {
 
         Menu palveluMenu = new Menu("Palvelu");
         MenuItem palveluMenuItem = new MenuItem("Hallinta");
-        palveluMenuItem.setOnAction(e -> root.setCenter(palveluHallintaView));
+        PalveluHallintaController palveluHallintaController = new PalveluHallintaController();
+        palveluMenuItem.setOnAction(e -> root.setCenter(palveluHallintaController));
         palveluMenu.getItems().add(palveluMenuItem);
 
         Menu majoitusvarausMenu = new Menu("Majoitusvaraus");
