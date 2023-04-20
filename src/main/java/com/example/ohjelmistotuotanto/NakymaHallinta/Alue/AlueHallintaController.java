@@ -7,14 +7,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +46,7 @@ public class AlueHallintaController extends BorderPane {
     public TextField alueidKentta;
 
 
+
     private void naytaAlue(List<AlueOlio> alueet) {
         ObservableList<AlueOlio> alueetData = FXCollections.observableArrayList(alueet);
         alueTable.setItems(alueetData);
@@ -52,9 +56,20 @@ public class AlueHallintaController extends BorderPane {
         // Alusta taulukon sarakkeet
         idalueColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAlue_id()).asObject());
         nimiAlueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getArea_nimi()));
+        nimiAlueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nimiAlueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<AlueOlio, String>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<AlueOlio, String> event)
+            {
+                AlueOlio alueOlio1 = event.getRowValue();
+                alueOlio1.setArea_nimi(event.getNewValue());
+            }
+        });
 
         ObservableList<AlueOlio> alueetData = FXCollections.observableArrayList(haeAlueetTietokannasta());
         alueTable.setItems(alueetData);
+        alueTable.setEditable(true);
 
         // Hae mokit tietokannasta ja lisää ne taulukkoon
 

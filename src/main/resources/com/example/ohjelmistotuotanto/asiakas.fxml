@@ -10,14 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="811.0" prefWidth="1285.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="811.0" prefWidth="1285.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane layoutX="236.0" layoutY="309.0" prefHeight="499.0" prefWidth="1049.0">
          <children>
             <TableView fx:id="asiakasTable" layoutX="-1.0" layoutY="-1.0" prefHeight="499.0" prefWidth="1043.0">
               <columns>
-                <TableColumn fx:id="asiakasColumn" prefWidth="64.0" text="asiakas_id" />
+                <TableColumn fx:id="asiakasIdColumn" prefWidth="64.0" text="asiakas_id" />
                 <TableColumn fx:id="postinroColumn" prefWidth="77.0" text="postinro" />
                   <TableColumn fx:id="etunimiColumn" prefWidth="78.0" text="etunimi" />
                   <TableColumn fx:id="sukunimiColumn" prefWidth="102.0" text="sukunimi" />

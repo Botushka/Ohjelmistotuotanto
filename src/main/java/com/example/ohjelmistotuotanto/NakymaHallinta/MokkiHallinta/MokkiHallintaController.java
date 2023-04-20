@@ -17,7 +17,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,16 +84,117 @@ public class MokkiHallintaController extends BorderPane {
     public void initialize() {
         // Alusta taulukon sarakkeet
         mokkiIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(Integer.parseInt(cellData.getValue().getMokkiId())).asObject());
+        mokkiIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        mokkiIdColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, Integer>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, Integer> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setMokkiId(String.valueOf(event.getNewValue()));
+            }
+        });
+
         alueIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAlueId()).asObject());
+        alueIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        alueIdColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, Integer>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, Integer> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setAlueId(event.getNewValue());
+            }
+        });
+
+
         postinroColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPostinro()).asObject().asString());
+        postinroColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        postinroColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, String>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, String> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setPostinro(Integer.parseInt(event.getNewValue()));
+            }
+        });
+
         nimiColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNimi()));
+        nimiColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nimiColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, String>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, String> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setNimi(event.getNewValue());
+            }
+        });
+
         katuosoiteColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKatuosoite()));
+        katuosoiteColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        katuosoiteColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, String>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, String> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setKatuosoite(event.getNewValue());
+            }
+        });
+
         hintaColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getHinta()).asObject());
+        hintaColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        hintaColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, Double>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, Double> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setHinta(event.getNewValue());
+            }
+        });
+
         henkilomaaraColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getHenkilomaara()).asObject());
+        henkilomaaraColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        henkilomaaraColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, Integer>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, Integer> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setHenkilomaara(event.getNewValue());
+            }
+        });
+
         varusteluColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVarustelu()));
+        varusteluColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        varusteluColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, String>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, String> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setVarustelu(event.getNewValue());
+            }
+        });
+
         kuvausColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getKuvaus()));
+        kuvausColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        kuvausColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, String>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Mokki, String> event)
+            {
+                Mokki mokki = event.getRowValue();
+                mokki.setKuvaus(event.getNewValue());
+            }
+        });
+
         ObservableList<Mokki> mokkiData = FXCollections.observableArrayList(haeMokitTietokannasta());
         mokkiTable.setItems(mokkiData);
+        mokkiTable.setEditable(true);
 
         naytaMokit(mokkiData);
         // Hae mokit tietokannasta ja lisää ne taulukkoon
@@ -170,6 +274,7 @@ public class MokkiHallintaController extends BorderPane {
 
     private void muokkaaMokki(ActionEvent event) {
     }
+
 
 
     @FXML

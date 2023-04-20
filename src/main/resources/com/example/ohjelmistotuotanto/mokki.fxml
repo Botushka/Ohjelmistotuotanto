@@ -49,7 +49,7 @@
                               <Insets />
                            </opaqueInsets>
                         </Button>
-                        <Button fx:id="muokkaanappula" layoutX="638.0" layoutY="9.0" mnemonicParsing="false" onAction="#muokkaaMokki" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #7156DD;" text="Muokkaa" textFill="WHITE" />
+                        <Button fx:id="muokkaanappula" layoutX="638.0" layoutY="9.0" mnemonicParsing="false" onAction="#muokkaaMokki" prefHeight="30.0" prefWidth="206.0" style="-fx-background-color: #7156DD;" text="Tallenna muutokset tietokantaan" textFill="WHITE" />
                      </children>
                   </Pane>
                </children>
