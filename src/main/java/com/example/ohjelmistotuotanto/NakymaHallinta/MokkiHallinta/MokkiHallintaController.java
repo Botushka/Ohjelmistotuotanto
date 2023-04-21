@@ -1,5 +1,6 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta;
 
+import com.example.ohjelmistotuotanto.DatabaseManager;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -23,6 +24,10 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -74,6 +79,7 @@ public class MokkiHallintaController extends BorderPane {
     public TextField mokkikentta;
     public TextField hintakentta;
     private List<Mokki> mokit = new ArrayList<>();
+
 
     private void naytaMokit(List<Mokki> mokit) {
         ObservableList<Mokki> mokkiData = FXCollections.observableArrayList(mokit);
@@ -244,13 +250,15 @@ public class MokkiHallintaController extends BorderPane {
     }
 
     @FXML
-    public void lisaatieto(ActionEvent event) {
+    public void lisaatieto(ActionEvent event) throws SQLException {
         Mokki newMokki = new Mokki(mokkikentta.getText(), Integer.parseInt(aluekentta.getText()), Integer.parseInt(postikentta.getText()),
                 nimikentta.getText(), osoitekentta.getText(), Double.parseDouble(hintakentta.getText()),
                 Integer.parseInt(hmaarakentta.getText()), varustelukentta.getText(), kuvauskentta.getText());
 
         ObservableList<Mokki> mokitData = mokkiTable.getItems();
         mokitData.add(newMokki);
+
+        updateMokki(newMokki);
 
         // Clear the input fields
         mokkikentta.clear();
@@ -290,4 +298,39 @@ public class MokkiHallintaController extends BorderPane {
         }
     }
 
+    String url = "jdbc:mysql://localhost:3306/vn";
+    String user = "root";
+    String password = "";
+
+    Connection connection = null;
+    {
+        try {
+            connection = DriverManager.getConnection(url, user, password);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        // Prepare your SQL statement and execute it here
+    }
+    private void updateMokki(Mokki mokki) {
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            String insertQuery = "INSERT INTO Mokki (alue_id, postinro, mokkinimi, katuosoite, hinta, henkilomaara, varustelu, kuvaus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setInt(1, mokki.getAlueId());
+            preparedStatement.setInt(2, mokki.getPostinro());
+            preparedStatement.setString(3, mokki.getNimi());
+            preparedStatement.setString(4, mokki.getKatuosoite());
+            preparedStatement.setDouble(5, mokki.getHinta());
+            preparedStatement.setInt(6, mokki.getHenkilomaara());
+            preparedStatement.setString(7, mokki.getVarustelu());
+            preparedStatement.setString(8, mokki.getKuvaus());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

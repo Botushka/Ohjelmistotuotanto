@@ -20,6 +20,10 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -45,6 +49,35 @@ public class AlueHallintaController extends BorderPane {
     public TextField aluenimiKentta;
     public TextField alueidKentta;
 
+    private String url = "jdbc:mysql://localhost:3306/vn";
+    private String user = "root";
+    private String password = "";
+
+    private Connection connection = null;
+
+    {
+        try {
+            connection = DriverManager.getConnection(url, user, password);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    private void updateAlue(AlueOlio alue) {
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            String insertQuery = "INSERT INTO alue (alue_id, nimi) VALUES ( ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setInt(1, alue.getAlue_id());
+            preparedStatement.setString(2, alue.getArea_nimi());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     private void naytaAlue(List<AlueOlio> alueet) {
@@ -126,6 +159,7 @@ public class AlueHallintaController extends BorderPane {
 
         // Add the new AlueOlio to the table
         alueetData.add(newAlue);
+        updateAlue(newAlue);
         aluenimiKentta.clear();
         alueidKentta.clear();
 

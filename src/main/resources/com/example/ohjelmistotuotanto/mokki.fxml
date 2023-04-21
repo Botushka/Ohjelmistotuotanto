@@ -69,7 +69,7 @@
          <children>
             <TextField fx:id="mokkikentta" prefHeight="26.0" prefWidth="152.0" promptText="mokki_ID" />
             <TextField fx:id="aluekentta" promptText="alue_ID" />
-            <TextField fx:id="postikentta" promptText="postinumero" />
+            <TextField fx:id="postikentta" promptText="postinumero (01200)" />
             <TextField fx:id="nimikentta" promptText="mökin nimi" />
             <TextField fx:id="osoitekentta" promptText="katuosoite" />
             <TextField fx:id="hintakentta" promptText="hinta" />
@@ -84,5 +84,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Label layoutX="14.0" layoutY="802.0" prefHeight="63.0" prefWidth="736.0" text="Huom: Tietokantaa varten kohdat alue_ID ja postinumero täytyy olla samat mitkä on jo tietokannassa määriteltynä" />
    </children>
 </AnchorPane>
