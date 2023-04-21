@@ -24,13 +24,12 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.net.URL;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class MokkiHallintaController extends BorderPane {
 
@@ -78,6 +77,11 @@ public class MokkiHallintaController extends BorderPane {
     public TextField aluekentta;
     public TextField mokkikentta;
     public TextField hintakentta;
+    private String url = "jdbc:mysql://localhost:3306/vn";
+    private String user = "root";
+    private String password = "";
+
+    private DatabaseManager dbManager;
     private List<Mokki> mokit = new ArrayList<>();
 
 
@@ -87,7 +91,8 @@ public class MokkiHallintaController extends BorderPane {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
+
         // Alusta taulukon sarakkeet
         mokkiIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(Integer.parseInt(cellData.getValue().getMokkiId())).asObject());
         mokkiIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -229,9 +234,27 @@ public class MokkiHallintaController extends BorderPane {
         });
     }
 
-    private List<Mokki> haeMokitTietokannasta() {
+    private List<Mokki> haeMokitTietokannasta() throws SQLException {
         // Tämä on vain esimerkki, voit korvata tämän oikealla tietokannan käyttöä hoitavalla koodilla
         List<Mokki> mokit = new ArrayList<>();
+        DatabaseManager dbmanager = new DatabaseManager(url, user, password);
+        ResultSet rs = dbmanager.retrieveData("mokki", new String[]{"mokki_id", "alue_id", "postinro", "mokkinimi", "katuosoite", "hinta", "henkilomaara", "varustelu", "kuvaus"});
+
+        while (rs.next()) {
+            String mokkiId = rs.getString("mokki_id");
+            int alueId = rs.getInt("alue_id");
+            int postinro = rs.getInt("postinro");
+            String mokkinimi = rs.getString("mokkinimi");
+            String katuosoite = rs.getString("katuosoite");
+            double hinta = rs.getDouble("hinta");
+            int henkilomaara = rs.getInt("henkilomaara");
+            String varustus = rs.getString("varustelu");
+            String kuvaus = rs.getString("kuvaus");
+            mokit.add(new Mokki(mokkiId,alueId,postinro,mokkinimi,katuosoite,hinta,henkilomaara,varustus,kuvaus));
+            // Do something with the retrieved data
+        }
+
+        rs.close();
         mokit.add(new Mokki("1", 1, 12345, "Mökki1", "Katu1", 100.0, 2, "Hyvä", "Luksusmökki järven rannalla"));
         mokit.add(new Mokki("2", 2, 54321, "Mökki2", "Katu2", 200.0, 3, "Hyvä", "Kaunis mökki metsän keskellä"));
         return mokit;
@@ -240,6 +263,10 @@ public class MokkiHallintaController extends BorderPane {
 
 
     public MokkiHallintaController() {
+        this.url = "jdbc:mysql://localhost:3306/vn";
+        this.user = "root";
+        this.password = "";
+        this.dbManager = new DatabaseManager(url, user, password);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ohjelmistotuotanto/mokki.fxml"));
         loader.setController(this);
         try {
@@ -298,14 +325,11 @@ public class MokkiHallintaController extends BorderPane {
         }
     }
 
-    String url = "jdbc:mysql://localhost:3306/vn";
-    String user = "root";
-    String password = "";
+    Connection connection;
 
-    Connection connection = null;
     {
         try {
-            connection = DriverManager.getConnection(url, user, password);
+            connection = DriverManager.getConnection(this.url, this.user, this.password);
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }

@@ -11,12 +11,15 @@ public class DatabaseManager {
     private String password;
 
     public DatabaseManager(String url, String username, String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
+        this.url = "jdbc:mysql://localhost:3306/vn";
+        this.username = "root";
+        this.password = "";
     }
 
     public void connect() throws SQLException {
+        this.url = "jdbc:mysql://localhost:3306/vn";
+        this.username = "root";
+        this.password = "";
         connection = DriverManager.getConnection(url, username, password);
     }
 
@@ -47,11 +50,15 @@ public class DatabaseManager {
         statement.executeUpdate();
     }
 
-    public ResultSet retrieveData(String tableName, String[] columnNames, String whereClause) throws SQLException {
-        String sql = "SELECT " + String.join(",", columnNames) + " FROM " + tableName;
-        if (whereClause != null && !whereClause.isEmpty()) {
-            sql += " WHERE " + whereClause;
+    public ResultSet retrieveData(String tableName, String[] columnNames) throws SQLException {
+        connect();
+
+        if (connection == null) {
+            throw new SQLException("Database connection is not established.");
         }
+
+        String sql = "SELECT " + String.join(",", columnNames) + " FROM " + tableName;
+
         Statement statement = connection.createStatement();
         return statement.executeQuery(sql);
     }
