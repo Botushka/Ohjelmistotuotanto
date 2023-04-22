@@ -30,6 +30,8 @@ public class DatabaseManager {
     }
 
     public void saveOrUpdate(Mokki mokki) throws SQLException {
+        connect();
+
         PreparedStatement statement;
         if (mokki.getMokkiId() == null) {
             String sql = "INSERT INTO Mokki (alue_id, postinro, mokkinimi, katuosoite, hinta, henkilomaara, varustelu, kuvaus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -47,8 +49,13 @@ public class DatabaseManager {
         statement.setInt(6, mokki.getHenkilomaara());
         statement.setString(7, mokki.getVarustelu());
         statement.setString(8, mokki.getKuvaus());
-        statement.executeUpdate();
+        int affectedRows = statement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
+        disconnect();
     }
+
 
     public ResultSet retrieveData(String tableName, String[] columnNames) throws SQLException {
         connect();
