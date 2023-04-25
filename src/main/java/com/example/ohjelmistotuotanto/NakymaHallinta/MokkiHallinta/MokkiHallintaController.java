@@ -1,6 +1,5 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta;
 
-import com.example.ohjelmistotuotanto.DatabaseManager;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -24,12 +23,9 @@ import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
-import java.net.URL;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class MokkiHallintaController extends BorderPane {
 
@@ -77,13 +73,7 @@ public class MokkiHallintaController extends BorderPane {
     public TextField aluekentta;
     public TextField mokkikentta;
     public TextField hintakentta;
-    private String url = "jdbc:mysql://localhost:3306/vn";
-    private String user = "root";
-    private String password = "";
-
-    private DatabaseManager dbManager;
     private List<Mokki> mokit = new ArrayList<>();
-
 
     private void naytaMokit(List<Mokki> mokit) {
         ObservableList<Mokki> mokkiData = FXCollections.observableArrayList(mokit);
@@ -91,8 +81,7 @@ public class MokkiHallintaController extends BorderPane {
     }
 
     @FXML
-    public void initialize() throws SQLException {
-
+    public void initialize() {
         // Alusta taulukon sarakkeet
         mokkiIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(Integer.parseInt(cellData.getValue().getMokkiId())).asObject());
         mokkiIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -103,7 +92,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setMokkiId(String.valueOf(event.getNewValue()));
-                muokkaaMokki();
             }
         });
 
@@ -116,7 +104,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setAlueId(event.getNewValue());
-                muokkaaMokki();
             }
         });
 
@@ -130,7 +117,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setPostinro(Integer.parseInt(event.getNewValue()));
-                muokkaaMokki();
             }
         });
 
@@ -143,7 +129,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setNimi(event.getNewValue());
-                muokkaaMokki();
             }
         });
 
@@ -156,7 +141,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setKatuosoite(event.getNewValue());
-                muokkaaMokki();
             }
         });
 
@@ -169,7 +153,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setHinta(event.getNewValue());
-                muokkaaMokki();
             }
         });
 
@@ -182,7 +165,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setHenkilomaara(event.getNewValue());
-                muokkaaMokki();
             }
         });
 
@@ -195,7 +177,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setVarustelu(event.getNewValue());
-                muokkaaMokki();
             }
         });
 
@@ -208,7 +189,6 @@ public class MokkiHallintaController extends BorderPane {
             {
                 Mokki mokki = event.getRowValue();
                 mokki.setKuvaus(event.getNewValue());
-                muokkaaMokki();
             }
         });
 
@@ -243,27 +223,9 @@ public class MokkiHallintaController extends BorderPane {
         });
     }
 
-    private List<Mokki> haeMokitTietokannasta() throws SQLException {
+    private List<Mokki> haeMokitTietokannasta() {
         // Tämä on vain esimerkki, voit korvata tämän oikealla tietokannan käyttöä hoitavalla koodilla
         List<Mokki> mokit = new ArrayList<>();
-        DatabaseManager dbmanager = new DatabaseManager(url, user, password);
-        ResultSet rs = dbmanager.retrieveData("mokki", new String[]{"mokki_id", "alue_id", "postinro", "mokkinimi", "katuosoite", "hinta", "henkilomaara", "varustelu", "kuvaus"});
-
-        while (rs.next()) {
-            String mokkiId = rs.getString("mokki_id");
-            int alueId = rs.getInt("alue_id");
-            int postinro = rs.getInt("postinro");
-            String mokkinimi = rs.getString("mokkinimi");
-            String katuosoite = rs.getString("katuosoite");
-            double hinta = rs.getDouble("hinta");
-            int henkilomaara = rs.getInt("henkilomaara");
-            String varustus = rs.getString("varustelu");
-            String kuvaus = rs.getString("kuvaus");
-            mokit.add(new Mokki(mokkiId,alueId,postinro,mokkinimi,katuosoite,hinta,henkilomaara,varustus,kuvaus));
-            // Do something with the retrieved data
-        }
-
-        rs.close();
         mokit.add(new Mokki("1", 1, 12345, "Mökki1", "Katu1", 100.0, 2, "Hyvä", "Luksusmökki järven rannalla"));
         mokit.add(new Mokki("2", 2, 54321, "Mökki2", "Katu2", 200.0, 3, "Hyvä", "Kaunis mökki metsän keskellä"));
         return mokit;
@@ -272,10 +234,6 @@ public class MokkiHallintaController extends BorderPane {
 
 
     public MokkiHallintaController() {
-        this.url = "jdbc:mysql://localhost:3306/vn";
-        this.user = "root";
-        this.password = "";
-        this.dbManager = new DatabaseManager(url, user, password);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ohjelmistotuotanto/mokki.fxml"));
         loader.setController(this);
         try {
@@ -286,15 +244,13 @@ public class MokkiHallintaController extends BorderPane {
     }
 
     @FXML
-    public void lisaatieto(ActionEvent event) throws SQLException {
+    public void lisaatieto(ActionEvent event) {
         Mokki newMokki = new Mokki(mokkikentta.getText(), Integer.parseInt(aluekentta.getText()), Integer.parseInt(postikentta.getText()),
                 nimikentta.getText(), osoitekentta.getText(), Double.parseDouble(hintakentta.getText()),
                 Integer.parseInt(hmaarakentta.getText()), varustelukentta.getText(), kuvauskentta.getText());
 
         ObservableList<Mokki> mokitData = mokkiTable.getItems();
         mokitData.add(newMokki);
-
-        dbTallenna(newMokki);
 
         // Clear the input fields
         mokkikentta.clear();
@@ -311,19 +267,12 @@ public class MokkiHallintaController extends BorderPane {
     }
 
     private EventHandler<ActionEvent> alkuperaisetMuokkausKasittelija;
-
     @FXML
     private void muokkaaMokki() {
-        Mokki mokki = mokkiTable.getSelectionModel().getSelectedItem();
-        if (mokki != null) {
-            try {
-                DatabaseManager mokkiDAO = new DatabaseManager(url, user, password);
-                mokkiDAO.saveOrUpdate(mokki);
-            } catch (SQLException e) {
-                System.out.println("Failed to update Mokki in the database.");
-                e.printStackTrace();
-            }
-        }
+
+    }
+
+    private void muokkaaMokki(ActionEvent event) {
     }
 
 
@@ -338,53 +287,7 @@ public class MokkiHallintaController extends BorderPane {
             tableItems.remove(selectedIndex);
             mokkiTable.setItems(tableItems);
             mokkiTable.refresh();
-
-            try {
-                Connection conn = DriverManager.getConnection(url, user, password);
-                String deleteQuery = "DELETE FROM Mokki WHERE mokki_id = ?";
-                PreparedStatement preparedStatement = conn.prepareStatement(deleteQuery);
-                preparedStatement.setString(1, selectedMokki.getMokkiId());
-                int affectedRows = preparedStatement.executeUpdate();
-                if (affectedRows == 0) {
-                    throw new SQLException("Jokin meni pieleen tiedon poistamisessa tietokannasta");
-                }
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    Connection connection;
-
-    {
-        try {
-            connection = DriverManager.getConnection(this.url, this.user, this.password);
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        // Prepare your SQL statement and execute it here
-    }
-    private void dbTallenna(Mokki mokki) {
-        try {
-            Connection conn = DriverManager.getConnection(url, user, password);
-            String insertQuery = "INSERT INTO Mokki (alue_id, postinro, mokkinimi, katuosoite, hinta, henkilomaara, varustelu, kuvaus) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, mokki.getAlueId());
-            preparedStatement.setInt(2, mokki.getPostinro());
-            preparedStatement.setString(3, mokki.getNimi());
-            preparedStatement.setString(4, mokki.getKatuosoite());
-            preparedStatement.setDouble(5, mokki.getHinta());
-            preparedStatement.setInt(6, mokki.getHenkilomaara());
-            preparedStatement.setString(7, mokki.getVarustelu());
-            preparedStatement.setString(8, mokki.getKuvaus());
-            int affectedRows = preparedStatement.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
-            }
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
