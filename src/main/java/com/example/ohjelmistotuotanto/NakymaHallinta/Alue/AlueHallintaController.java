@@ -1,5 +1,6 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.Alue;
 
+import com.example.ohjelmistotuotanto.DatabaseManager;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -20,10 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -62,6 +60,7 @@ public class AlueHallintaController extends BorderPane {
             throw new RuntimeException(ex);
         }
     }
+
     private void updateAlue(AlueOlio alue) {
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
@@ -79,13 +78,12 @@ public class AlueHallintaController extends BorderPane {
         }
     }
 
-
     private void naytaAlue(List<AlueOlio> alueet) {
         ObservableList<AlueOlio> alueetData = FXCollections.observableArrayList(alueet);
         alueTable.setItems(alueetData);
     }
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         // Alusta taulukon sarakkeet
         idalueColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAlue_id()).asObject());
         nimiAlueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getArea_nimi()));
@@ -124,15 +122,23 @@ public class AlueHallintaController extends BorderPane {
         });
     }
 
-    private List<AlueOlio> haeAlueetTietokannasta() {
+    private List<AlueOlio> haeAlueetTietokannasta() throws SQLException {
         // Tämä on vain esimerkki, voit korvata tämän oikealla tietokannan käyttöä hoitavalla koodilla
         List<AlueOlio> alueet = new ArrayList<>();
         alueet.add(new AlueOlio(1, "Kuopio"));
         alueet.add(new AlueOlio(2, "Vantaa"));
+
+        DatabaseManager dbmanager = new DatabaseManager(url, user, password);
+        ResultSet rs = dbmanager.retrieveData("alue", new String[]{"alue_id", "nimi"});
+
+        while (rs.next()) {
+            int alueId = rs.getInt("alue_id");
+            String alue_nimi = rs.getString("nimi");
+            alueet.add(new AlueOlio(alueId, alue_nimi));
+
+        }
         return alueet;
-
     }
-
     public AlueHallintaController() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/ohjelmistotuotanto/alue.fxml"));
         loader.setController(this);
@@ -169,14 +175,28 @@ public class AlueHallintaController extends BorderPane {
 
     @FXML
     private void delAlue(ActionEvent event) {
-        AlueOlio selectedMokki = alueTable.getSelectionModel().getSelectedItem();
-        if (selectedMokki != null) {
+        AlueOlio selectedAlue = alueTable.getSelectionModel().getSelectedItem();
+        if (selectedAlue != null) {
             TableView.TableViewSelectionModel<AlueOlio> selectionModel = alueTable.getSelectionModel();
             ObservableList<AlueOlio> tableItems = alueTable.getItems();
             int selectedIndex = selectionModel.getSelectedIndex();
             tableItems.remove(selectedIndex);
             alueTable.setItems(tableItems);
             alueTable.refresh();
+
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                String deleteQuery = "DELETE FROM alue WHERE alue_id = ?";
+                PreparedStatement preparedStatement = conn.prepareStatement(deleteQuery);
+                preparedStatement.setInt(1, selectedAlue.getAlue_id());
+                int affectedRows = preparedStatement.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("Jokin meni pieleen tiedon poistamisessa tietokannasta");
+                }
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
     @FXML

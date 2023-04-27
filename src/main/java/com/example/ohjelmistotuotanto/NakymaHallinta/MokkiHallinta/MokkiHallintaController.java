@@ -260,7 +260,7 @@ public class MokkiHallintaController extends BorderPane {
             String varustus = rs.getString("varustelu");
             String kuvaus = rs.getString("kuvaus");
             mokit.add(new Mokki(mokkiId,alueId,postinro,mokkinimi,katuosoite,hinta,henkilomaara,varustus,kuvaus));
-            // Do something with the retrieved data
+
         }
 
         rs.close();

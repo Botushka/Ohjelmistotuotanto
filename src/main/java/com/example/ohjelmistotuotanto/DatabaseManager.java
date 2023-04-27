@@ -57,6 +57,7 @@ public class DatabaseManager {
         disconnect();
     }
 
+
     public ResultSet retrieveData(String tableName, String[] columnNames) throws SQLException {
         connect();
 
