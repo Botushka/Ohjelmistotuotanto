@@ -1,5 +1,6 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta;
 
+import com.example.ohjelmistotuotanto.DatabaseManager;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -65,6 +66,11 @@ public class AsiakasHallintaController extends BorderPane
     public Button muokkaaasiakasnappula;
     @FXML
     public Button poistaasiakasnappula;
+    private String url = "jdbc:mysql://localhost:3306/vn";
+    private String user = "root";
+    private String password = "";
+
+    private DatabaseManager dbManager;
 
     private List<Asiakas> asiakkaat = new ArrayList<>();
     private void naytaAsiakkaat(List<Asiakas> asiakkaat) {
@@ -186,6 +192,7 @@ public class AsiakasHallintaController extends BorderPane
     private List<Asiakas> haeAsiakkaatTietokannasta()
     {
         List<Asiakas> asiakkaat = new ArrayList<>();
+        DatabaseManager dbmanager = new DatabaseManager(url, user, password);
         //Lisää oikea tietokanta myähemmin
         //asiakkaat.add(new Asiakas(1,2,"Testi","Tieto","Testitie","testi@email.com",0000000000));
         return asiakkaat;
