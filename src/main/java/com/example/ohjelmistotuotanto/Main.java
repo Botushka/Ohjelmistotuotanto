@@ -14,16 +14,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 public class Main extends Application {
     private BorderPane root;
     private AlueHallintaController alueHallintaView;
     private PalveluHallintaController palveluHallintaView;
     private MajoitusvarausHallintaView majoitusvarausHallintaView;
     private AsiakashallintaView asiakashallintaView;
-
 
     public static void main(String[] args) {
         launch(args);

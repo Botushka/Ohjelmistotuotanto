@@ -1,6 +1,7 @@
 package com.example.ohjelmistotuotanto;
 
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
+import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
 
 import java.sql.*;
 
@@ -55,7 +56,6 @@ public class DatabaseManager {
         }
         disconnect();
     }
-
 
     public ResultSet retrieveData(String tableName, String[] columnNames) throws SQLException {
         connect();

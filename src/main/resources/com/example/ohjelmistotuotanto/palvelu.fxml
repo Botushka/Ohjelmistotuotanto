@@ -14,13 +14,13 @@
    <children>
       <TableView fx:id="palvelutable" layoutX="343.0" layoutY="228.0" prefHeight="546.0" prefWidth="694.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Palvelu ID" />
-          <TableColumn prefWidth="75.0" text="Alue ID" />
-            <TableColumn prefWidth="75.0" text="Nimi" />
-            <TableColumn prefWidth="75.0" text="Tyyppi" />
-            <TableColumn prefWidth="75.0" text="Kuvaus" />
-            <TableColumn prefWidth="75.0" text="Hinta" />
-            <TableColumn prefWidth="75.0" text="Alv." />
+          <TableColumn fx:id="palveluIdColumn" prefWidth="75.0" text="Palvelu ID" />
+          <TableColumn fx:id="alueIdColumn" prefWidth="75.0" text="Alue ID" />
+            <TableColumn fx:id="nimiColumn" prefWidth="75.0" text="Nimi" />
+            <TableColumn fx:id="tyyppiColumn" prefWidth="75.0" text="Tyyppi" />
+            <TableColumn fx:id="kuvausColumn" prefWidth="75.0" text="Kuvaus" />
+            <TableColumn fx:id="hintaColumn" prefWidth="75.0" text="Hinta" />
+            <TableColumn fx:id="alvColumn" prefWidth="75.0" text="Alv." />
         </columns>
       </TableView>
       <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="60.0" layoutY="256.0" prefHeight="437.0" prefWidth="264.0" spacing="25.0">
