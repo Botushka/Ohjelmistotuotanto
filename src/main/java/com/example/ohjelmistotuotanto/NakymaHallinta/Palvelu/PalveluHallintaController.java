@@ -1,5 +1,6 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu;
 
+import com.example.ohjelmistotuotanto.DatabaseManager;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
 import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.Asiakas;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
@@ -21,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +85,11 @@ public class PalveluHallintaController extends BorderPane {
     @FXML
     private Button tallennapalvelubtn;
 
+    private String url = "jdbc:mysql://localhost:3306/vn";
+    private String user = "root";
+    private String password = "";
+
+    private Connection connection = null;
     private List<Palvelu> palvelut = new ArrayList<>();
     private void naytaPalvelut(List<Palvelu> palvelut) {
         ObservableList<Palvelu> palveluData = FXCollections.observableArrayList(palvelut);
@@ -100,12 +107,53 @@ public class PalveluHallintaController extends BorderPane {
             tableItems.remove(selectedIndex);
             palvelutable.setItems(tableItems);
             palvelutable.refresh();
+
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                String deleteQuery = "DELETE FROM palvelu WHERE palvelu_id = ?";
+                PreparedStatement preparedStatement = conn.prepareStatement(deleteQuery);
+                preparedStatement.setInt(1, valittuPalvelu.getPalvelu_id());
+                int affectedRows = preparedStatement.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("Jokin meni pieleen tiedon poistamisessa tietokannasta");
+                }
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @FXML
     void tallennapalvelu(ActionEvent event) {
 
+    }
+
+    private void muokkaaPalvelu() throws SQLException {
+        Palvelu palvelu = palvelutable.getSelectionModel().getSelectedItem();
+        DatabaseManager dbManager = new DatabaseManager(url, user,password);
+        dbManager.updatePalvelu(palvelu);
+    }
+    private void updatePalvelu(Palvelu palvelu) {
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            String insertQuery = "INSERT INTO palvelu (palvelu_id, alue_id, nimi, tyyppi, kuvaus, hinta, alv) VALUES ( ?, ?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setInt(1, palvelu.getPalvelu_id());
+            preparedStatement.setInt(2, palvelu.getAlue_id());
+            preparedStatement.setString(3, palvelu.getNimi());
+            preparedStatement.setInt(4, palvelu.getTyyppi());
+            preparedStatement.setString(5, palvelu.getKuvaus());
+            preparedStatement.setDouble(6, palvelu.getHinta());
+            preparedStatement.setDouble(7, palvelu.getAlv());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -116,8 +164,8 @@ public class PalveluHallintaController extends BorderPane {
 
         ObservableList<Palvelu> palvelutData = palvelutable.getItems();
         palvelutData.add(newPalvelu);
+        updatePalvelu(newPalvelu);
 
-        // Clear the input fields
         palveluid.clear();
         alueid.clear();
         palvelunimi.clear();
@@ -129,7 +177,7 @@ public class PalveluHallintaController extends BorderPane {
         naytaPalvelut(palvelutData);
     }
 
-    public void initialize() {
+    public void initialize() throws SQLException {
         palveluIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPalvelu_id()).asObject());
         palveluIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         palveluIdColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Palvelu, Integer>>() {
@@ -137,6 +185,11 @@ public class PalveluHallintaController extends BorderPane {
             public void handle(TableColumn.CellEditEvent<Palvelu, Integer> event) {
                 Palvelu palvelu = event.getRowValue();
                 palvelu.setPalvelu_id(event.getNewValue());
+                try {
+                    muokkaaPalvelu();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -147,6 +200,11 @@ public class PalveluHallintaController extends BorderPane {
             public void handle(TableColumn.CellEditEvent<Palvelu, Integer> event) {
                 Palvelu alue = event.getRowValue();
                 alue.setAlue_id(event.getNewValue());
+                try {
+                    muokkaaPalvelu();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -157,6 +215,11 @@ public class PalveluHallintaController extends BorderPane {
             public void handle(TableColumn.CellEditEvent<Palvelu, String> event) {
                 Palvelu nimi = event.getRowValue();
                 nimi.setNimi(event.getNewValue());
+                try {
+                    muokkaaPalvelu();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -167,6 +230,11 @@ public class PalveluHallintaController extends BorderPane {
             public void handle(TableColumn.CellEditEvent<Palvelu, Integer> event) {
                 Palvelu tyyppi = event.getRowValue();
                 tyyppi.setTyyppi(event.getNewValue());
+                try {
+                    muokkaaPalvelu();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -178,6 +246,11 @@ public class PalveluHallintaController extends BorderPane {
             public void handle(TableColumn.CellEditEvent<Palvelu, String> event) {
                 Palvelu kuvaus = event.getRowValue();
                 kuvaus.setKuvaus(event.getNewValue());
+                try {
+                    muokkaaPalvelu();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -188,6 +261,11 @@ public class PalveluHallintaController extends BorderPane {
             public void handle(TableColumn.CellEditEvent<Palvelu, Integer> event) {
                 Palvelu hinta = event.getRowValue();
                 hinta.setHinta(event.getNewValue());
+                try {
+                    muokkaaPalvelu();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -198,6 +276,11 @@ public class PalveluHallintaController extends BorderPane {
             public void handle(TableColumn.CellEditEvent<Palvelu, Integer> event) {
                 Palvelu alv = event.getRowValue();
                 alv.setAlv(event.getNewValue());
+                try {
+                    muokkaaPalvelu();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -232,10 +315,23 @@ public class PalveluHallintaController extends BorderPane {
         });
     }
 
-    private List<Palvelu> haePalvelutTietokannasta()
-    {
+    private List<Palvelu> haePalvelutTietokannasta() throws SQLException {
         List<Palvelu> palvelut = new ArrayList<>();
-        palvelut.add(new Palvelu( 1, 2, "k", 3, "u",5,6));
+        DatabaseManager dbmanager = new DatabaseManager(url, user, password);
+        ResultSet rs = dbmanager.retrieveData("palvelu", new String[]{"palvelu_id", "alue_id", "nimi", "tyyppi", "kuvaus", "hinta", "alv"});
+
+        while (rs.next()) {
+            int palveluid = rs.getInt("palvelu_id");
+            int alueId = rs.getInt("alue_id");
+            String nimi = rs.getString("nimi");
+            int tyyppi = rs.getInt("tyyppi");
+            String kuvaus = rs.getString("kuvaus");
+            double hinta = rs.getDouble("hinta");
+            double alv = rs.getInt("alv");
+            palvelut.add(new Palvelu(palveluid, alueId, nimi, tyyppi,kuvaus, hinta, alv));
+
+            palvelut.add(new Palvelu(1, 2, "k", 3, "u", 5, 6));
+        }
         return palvelut;
     }
 
@@ -246,8 +342,8 @@ public class PalveluHallintaController extends BorderPane {
                 Integer.parseInt(palvelutyyppi.getText()),palvelukuvaus.getText(), Integer.parseInt(palveluhinta.getText()),Integer.parseInt(palvelualv.getText()));
 
         palveluData.add(uusiPalvelu);
+        updatePalvelu(uusiPalvelu);
 
-        // Clear the input fields
         palveluid.clear();
         alueid.clear();
         palvelunimi.clear();

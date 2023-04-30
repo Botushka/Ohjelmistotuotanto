@@ -93,7 +93,6 @@ public class MokkiHallintaController extends BorderPane {
     @FXML
     public void initialize() throws SQLException {
 
-        // Alusta taulukon sarakkeet
         mokkiIdColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(Integer.parseInt(cellData.getValue().getMokkiId())).asObject());
         mokkiIdColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         mokkiIdColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Mokki, Integer>>()
@@ -217,7 +216,6 @@ public class MokkiHallintaController extends BorderPane {
         mokkiTable.setEditable(true);
 
         naytaMokit(mokkiData);
-        // Hae mokit tietokannasta ja lisää ne taulukkoon
 
         haemokki.textProperty().addListener((observable, oldValue, newValue) -> {
             String hakusana = newValue.toLowerCase();
@@ -244,7 +242,6 @@ public class MokkiHallintaController extends BorderPane {
     }
 
     private List<Mokki> haeMokitTietokannasta() throws SQLException {
-        // Tämä on vain esimerkki, voit korvata tämän oikealla tietokannan käyttöä hoitavalla koodilla
         List<Mokki> mokit = new ArrayList<>();
         DatabaseManager dbmanager = new DatabaseManager(url, user, password);
         ResultSet rs = dbmanager.retrieveData("mokki", new String[]{"mokki_id", "alue_id", "postinro", "mokkinimi", "katuosoite", "hinta", "henkilomaara", "varustelu", "kuvaus"});
@@ -264,8 +261,8 @@ public class MokkiHallintaController extends BorderPane {
         }
 
         rs.close();
-        mokit.add(new Mokki("1", 1, 12345, "Mökki1", "Katu1", 100.0, 2, "Hyvä", "Luksusmökki järven rannalla"));
-        mokit.add(new Mokki("2", 2, 54321, "Mökki2", "Katu2", 200.0, 3, "Hyvä", "Kaunis mökki metsän keskellä"));
+        //mokit.add(new Mokki("1", 1, 12345, "Mökki1", "Katu1", 100.0, 2, "Hyvä", "Luksusmökki järven rannalla"));
+       // mokit.add(new Mokki("2", 2, 54321, "Mökki2", "Katu2", 200.0, 3, "Hyvä", "Kaunis mökki metsän keskellä"));
         return mokit;
 
     }
@@ -295,8 +292,6 @@ public class MokkiHallintaController extends BorderPane {
         mokitData.add(newMokki);
 
         dbTallenna(newMokki);
-
-        // Clear the input fields
         mokkikentta.clear();
         aluekentta.clear();
         postikentta.clear();
@@ -310,7 +305,6 @@ public class MokkiHallintaController extends BorderPane {
         naytaMokit(mokitData);
     }
 
-    private EventHandler<ActionEvent> alkuperaisetMuokkausKasittelija;
 
     @FXML
     private void muokkaaMokki() {
@@ -363,7 +357,6 @@ public class MokkiHallintaController extends BorderPane {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        // Prepare your SQL statement and execute it here
     }
     private void dbTallenna(Mokki mokki) {
         try {

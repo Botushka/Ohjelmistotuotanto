@@ -2,6 +2,7 @@ package com.example.ohjelmistotuotanto.NakymaHallinta.Alue;
 
 import com.example.ohjelmistotuotanto.DatabaseManager;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
+import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -78,14 +79,19 @@ public class AlueHallintaController extends BorderPane {
         }
     }
 
+    private void muokkaaAlue() throws SQLException {
+        AlueOlio alue = alueTable.getSelectionModel().getSelectedItem();
+        DatabaseManager dbManager = new DatabaseManager(url, user,password);
+        dbManager.updateAlue(alue);
+    }
+
     private void naytaAlue(List<AlueOlio> alueet) {
         ObservableList<AlueOlio> alueetData = FXCollections.observableArrayList(alueet);
         alueTable.setItems(alueetData);
     }
     @FXML
     public void initialize() throws SQLException {
-        // Alusta taulukon sarakkeet
-        idalueColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAlue_id()).asObject());
+       
         nimiAlueColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getArea_nimi()));
         nimiAlueColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         nimiAlueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<AlueOlio, String>>()
@@ -95,14 +101,31 @@ public class AlueHallintaController extends BorderPane {
             {
                 AlueOlio alueOlio1 = event.getRowValue();
                 alueOlio1.setArea_nimi(event.getNewValue());
+                try {
+                    muokkaaAlue();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        idalueColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAlue_id()).asObject());
+        idalueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        idalueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<AlueOlio, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<AlueOlio, Integer> event) {
+                AlueOlio alue = event.getRowValue();
+                alue.setAlue_id(event.getNewValue());
+                try {
+                    muokkaaAlue();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
         ObservableList<AlueOlio> alueetData = FXCollections.observableArrayList(haeAlueetTietokannasta());
         alueTable.setItems(alueetData);
         alueTable.setEditable(true);
-
-        // Hae mokit tietokannasta ja lisää ne taulukkoon
 
         aluehaeKentta.textProperty().addListener((observable, oldValue, newValue) -> {
             String hakusana = newValue.toLowerCase();
@@ -123,10 +146,7 @@ public class AlueHallintaController extends BorderPane {
     }
 
     private List<AlueOlio> haeAlueetTietokannasta() throws SQLException {
-        // Tämä on vain esimerkki, voit korvata tämän oikealla tietokannan käyttöä hoitavalla koodilla
         List<AlueOlio> alueet = new ArrayList<>();
-        alueet.add(new AlueOlio(1, "Kuopio"));
-        alueet.add(new AlueOlio(2, "Vantaa"));
 
         DatabaseManager dbmanager = new DatabaseManager(url, user, password);
         ResultSet rs = dbmanager.retrieveData("alue", new String[]{"alue_id", "nimi"});
@@ -150,26 +170,22 @@ public class AlueHallintaController extends BorderPane {
     }
     @FXML
     private void addAlue(ActionEvent event) {
-        // Generate unique idalue
+
         int newId = 1;
         ObservableList<AlueOlio> alueetData = alueTable.getItems();
         if (!alueetData.isEmpty()) {
-            // Sort the list by idalue in descending order
+
             alueetData.sort(Comparator.comparingInt(AlueOlio::getAlue_id).reversed());
-            // Get the highest idalue in the list and add 1 to generate a new idalue
+
             newId = alueetData.get(0).getAlue_id() + 1;
         }
-
-        // Create a new AlueOlio object with the generated idalue and the entered aluenimi
         AlueOlio newAlue = new AlueOlio(newId, aluenimiKentta.getText());
 
-        // Add the new AlueOlio to the table
         alueetData.add(newAlue);
         updateAlue(newAlue);
         aluenimiKentta.clear();
         alueidKentta.clear();
 
-        // Refresh the table view
         naytaAlue(alueetData);
     }
 
@@ -201,10 +217,10 @@ public class AlueHallintaController extends BorderPane {
     }
     @FXML
     private void editAlue() {
-        // Toteuta alueen muokkaaminen
+
     }
     @FXML
     private void haeAlue() {
-        // Toteuta alueen hakeminen
+
     }
 }
