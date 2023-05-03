@@ -1,5 +1,7 @@
 package com.example.ohjelmistotuotanto;
 
+import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
+import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.Asiakas;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
 
@@ -57,6 +59,59 @@ public class DatabaseManager {
         disconnect();
     }
 
+    public void updatePalvelu(Palvelu palvelu) throws SQLException {
+        connect();
+
+        String sql = "UPDATE palvelu SET palvelu_id = ?, alue_id = ?, nimi = ?, tyyppi = ?, kuvaus = ?, hinta = ?, alv = ? WHERE palvelu_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, palvelu.getPalvelu_id());
+        preparedStatement.setInt(2, palvelu.getAlue_id());
+        preparedStatement.setString(3, palvelu.getNimi());
+        preparedStatement.setInt(4, palvelu.getTyyppi());
+        preparedStatement.setString(5, palvelu.getKuvaus());
+        preparedStatement.setDouble(6, palvelu.getHinta());
+        preparedStatement.setDouble(7, palvelu.getAlv());
+        preparedStatement.setInt(8, palvelu.getPalvelu_id());
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
+        disconnect();
+    }
+
+    public void updateAsiakas(Asiakas asiakas) throws SQLException {
+        connect();
+
+        String sql = "UPDATE asiakas SET asiakas_id = ?, postinro = ?, etunimi = ?, sukunimi = ?, lahiosoite = ?, email = ?, puhelinnro = ? WHERE asiakas_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, asiakas.getAsiakasId());
+        preparedStatement.setInt(2, asiakas.getPostiNro());
+        preparedStatement.setString(3, asiakas.getEtunimi());
+        preparedStatement.setString(4, asiakas.getSukunimi());
+        preparedStatement.setString(5, asiakas.getLahiosoite());
+        preparedStatement.setString(6, asiakas.getEmail());
+        preparedStatement.setInt(7, asiakas.getPuhnumero());
+        preparedStatement.setInt(8, asiakas.getAsiakasId());
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
+        disconnect();
+    }
+    public void updateAlue(AlueOlio alue) throws SQLException {
+        connect();
+
+        String sql = "UPDATE alue SET alue_id = ?, nimi = ? WHERE alue_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, alue.getAlue_id());
+        preparedStatement.setString(2, alue.getArea_nimi());
+        preparedStatement.setInt(3, alue.getAlue_id());
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
+        disconnect();
+    }
     public ResultSet retrieveData(String tableName, String[] columnNames) throws SQLException {
         connect();
 
