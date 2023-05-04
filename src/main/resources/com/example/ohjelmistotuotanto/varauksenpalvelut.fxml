@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="755.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane prefHeight="200.0" prefWidth="1259.0" style="-fx-background-color: BLUE;">
+         <children>
+            <Label layoutX="523.0" layoutY="87.0" text="Lisää palveluita varaukseen" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="87.0" layoutY="233.0" prefHeight="503.0" prefWidth="288.0" spacing="25.0">
+         <children>
+            <ComboBox fx:id="varausIdKentta" editable="true" prefWidth="150.0" promptText="varaus_id" />
+            <ComboBox fx:id="palveluIdKentta" editable="true" prefWidth="150.0" promptText="palvelu_id" />
+            <TextField fx:id="lukumaaraKentta" promptText="lukumäärä" />
+            <Button mnemonicParsing="false" text="Lisää" />
+         </children>
+      </VBox>
+      <TableView layoutX="453.0" layoutY="294.0" prefHeight="447.0" prefWidth="435.0">
+        <columns>
+          <TableColumn prefWidth="110.0" text="Varaus ID" />
+          <TableColumn prefWidth="176.0" text="Palvelu ID" />
+            <TableColumn prefWidth="148.0" text="lkm" />
+        </columns>
+      </TableView>
+      <Button layoutX="776.0" layoutY="240.0" mnemonicParsing="false" text="Poista" />
+      <TextField layoutX="481.0" layoutY="240.0" promptText="Hae..." />
+   </children>
+</AnchorPane>

@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.css.SimpleStyleableStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,9 +18,8 @@ import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MajoitusHallintaController extends BorderPane
 {
@@ -73,8 +71,6 @@ public class MajoitusHallintaController extends BorderPane
     @FXML
     private TextField haevaraus;
 
-    @FXML
-    private TextField aluekentta1;
 
     private String url = "jdbc:mysql://localhost:3306/vn";
     private String user = "root";
@@ -128,6 +124,7 @@ public class MajoitusHallintaController extends BorderPane
         }
     }
 
+
     public void initialize()
     {
         asiakasColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAsiakas_id()).asObject());
@@ -144,7 +141,7 @@ public class MajoitusHallintaController extends BorderPane
 
         //alueColumn.setCellValueFactory(cellData -> SimpleIntegerProperty(cellData.getValue().getA));
 
-        mokkiColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getMokki_mokki_id()).asObject());
+        mokkiColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getMokki_id()).asObject());
         mokkiColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         mokkiColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Varaus, Integer>>()
         {
@@ -152,7 +149,7 @@ public class MajoitusHallintaController extends BorderPane
             public void handle(TableColumn.CellEditEvent<Varaus, Integer> event)
             {
                 Varaus varaus = event.getRowValue();
-                varaus.setMokki_mokki_id(event.getNewValue());
+                varaus.setMokki_id(event.getNewValue());
             }
         });
 
@@ -231,12 +228,11 @@ public class MajoitusHallintaController extends BorderPane
         aluekentta.setItems(items);
 
         aluekentta.setEditable(true);
-        aluekentta.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            aluekentta.hide();
-            aluekentta.getItems().setAll(filterItems(newValue, items));
-            aluekentta.setVisibleRowCount(Math.min(aluekentta.getItems().size(), 10));
-            aluekentta.show();
+        aluekentta.setOnKeyReleased(event ->{
+            String input = aluekentta.getEditor().getText();
+            updateAluekentta(input);
         });
+
 
         ObservableList<Integer> items2 = FXCollections.observableArrayList(1, 2, 3, 4, 5);
 
@@ -266,13 +262,6 @@ public class MajoitusHallintaController extends BorderPane
 
         mokkikentta.setItems(items4);
 
-        palvelutkentta.setEditable(true);
-        palvelutkentta.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            palvelutkentta.hide();
-            palvelutkentta.getItems().setAll((Palvelu) filterItems4(newValue, items4));
-            palvelutkentta.setVisibleRowCount(Math.min(asiakaskentta.getItems().size(), 10));
-            palvelutkentta.show();
-        });
 
         ObservableList<Varaus> varausData = FXCollections.observableArrayList(haeVarauksetTietokannasta());
         varausTable.setItems(varausData);
@@ -291,7 +280,7 @@ public class MajoitusHallintaController extends BorderPane
                     if (String.valueOf(varaus.getVaraus_id()).toLowerCase().contains(hakusana) ||
                             String.valueOf(varaus.getAsiakas_id()).toLowerCase().contains(hakusana) ||
                             //String.valueOf(varaus.getAlueID()).toLowerCase().contains(hakusana) ||
-                            String.valueOf(varaus.getMokki_mokki_id()).toLowerCase().contains(hakusana) ||
+                            String.valueOf(varaus.getMokki_id()).toLowerCase().contains(hakusana) ||
                             //varaus.getVarattu_alkupvm().toLowerCase().contains(hakusana) ||
                             String.valueOf(varaus.getVarattu_loppupvm()).toLowerCase().contains(hakusana) ||
                             String.valueOf(varaus.getVarattu_pvm()).toLowerCase().contains(hakusana))
@@ -304,6 +293,19 @@ public class MajoitusHallintaController extends BorderPane
                 varausTable.setItems(FXCollections.observableArrayList(hakutulokset));
             }
         });
+    }
+
+    private List<Integer> filterOptions(String input)
+    {
+        List<Integer> options = FXCollections.observableArrayList(1,2,3,4,5);
+        return options.stream()
+                .filter(option -> option.toString().startsWith(input))
+                .collect(Collectors.toList());
+    }
+
+    private void updateAluekentta(String input){
+        List<Integer> filteredOptions = filterOptions(input);
+        aluekentta.setItems(FXCollections.observableArrayList(filteredOptions));
     }
     private List<Integer> filterItems(String text, ObservableList<Integer> items) {
         if (text == null || text.isEmpty()) {
@@ -371,15 +373,24 @@ public class MajoitusHallintaController extends BorderPane
     @FXML
     public void lisaapainike(ActionEvent event) {
 
+        // Generate unique idalue
+        int newId = 1;
+        ObservableList<Varaus> varausData = varausTable.getItems();
+        if (!varausData.isEmpty()) {
+            // Sort the list by idalue in descending order
+            varausData.sort(Comparator.comparingInt(Varaus::getVaraus_id).reversed());
+            // Get the highest idalue in the list and add 1 to generate a new idalue
+            newId = varausData.get(0).getVaraus_id() + 1;
+        }
+
         Date varattuDate = java.sql.Date.valueOf(varattuKentta.getText());
         Date vahvistusDate = java.sql.Date.valueOf(vahvistusKentta.getValue());
         Date alkuDate = java.sql.Date.valueOf(alkupvmkentta.getValue());
         Date loppuDate = java.sql.Date.valueOf(loppupvmkentta.getValue());
 
-        Varaus uusiVaraus = new Varaus(Integer.parseInt(varausidkentta.getText()), Integer.parseInt(asiakaskentta.getEditor().getText()),
+        Varaus uusiVaraus = new Varaus(newId, Integer.parseInt(asiakaskentta.getEditor().getText()),
                 Integer.parseInt(mokkikentta.getEditor().getText()), varattuDate,vahvistusDate, alkuDate, loppuDate);
 
-        ObservableList<Varaus> varausData = varausTable.getItems();
         varausData.add(uusiVaraus);
 
         // Clear the input fields

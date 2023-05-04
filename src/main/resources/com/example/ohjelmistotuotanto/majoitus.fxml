@@ -24,13 +24,12 @@
             </Label>
          </children>
       </Pane>
-      <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="14.0" layoutY="170.0" prefHeight="512.0" prefWidth="274.0" spacing="20.0">
+      <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="37.0" layoutY="208.0" prefHeight="457.0" prefWidth="274.0" spacing="20.0">
          <children>
-            <TextField fx:id="varausidkentta" editable="false" promptText="Varaus_ID (auto)" text="0" />
-            <ComboBox fx:id="asiakaskentta" prefWidth="150.0" promptText="Valitse asiakas..." />
-            <TextField fx:id="aluekentta1" />
-            <ComboBox fx:id="aluekentta" prefWidth="150.0" promptText="Valitse alue..." />
-            <ComboBox fx:id="mokkikentta" prefWidth="150.0" promptText="Valitse mökki..." />
+            <TextField fx:id="varausidkentta" editable="false" promptText="Varaus_ID (auto)" />
+            <ComboBox fx:id="asiakaskentta" editable="true" prefWidth="150.0" promptText="Valitse asiakas..." />
+            <ComboBox fx:id="aluekentta" editable="true" prefWidth="150.0" promptText="Valitse alue..." />
+            <ComboBox fx:id="mokkikentta" editable="true" prefWidth="150.0" promptText="Valitse mökki..." />
             <Label text="Alkupäivämäärä:">
                <padding>
                   <Insets bottom="-15.0" />
@@ -48,9 +47,8 @@
                   <Insets bottom="-15.0" />
                </padding>
             </Label>
-            <DatePicker fx:id="vahvistusKentta" promptText="(Jätä tyhjäksi)" />
+            <DatePicker fx:id="vahvistusKentta" editable="false" promptText="(Jätä tyhjäksi)" />
             <TextField fx:id="varattuKentta" editable="false" promptText="Varauspäivä (auto)" text="27/04/2023" />
-            <ComboBox fx:id="palvelutkentta" prefWidth="150.0" promptText="Valitse palvelut..." />
             <Button fx:id="lisaapainike" mnemonicParsing="false" onAction="#lisaavaraus" text="Lisää" />
          </children>
       </VBox>
@@ -69,7 +67,7 @@
                   <TableColumn fx:id="vahvistettuColumn" prefWidth="148.0" text="Vahvistettu pvm" />
               </columns>
             </TableView>
-            <TextField fx:id="haevaraus" layoutX="45.0" layoutY="39.0" />
+            <TextField fx:id="haevaraus" layoutX="45.0" layoutY="39.0" promptText="Hae varausta..." />
             <Button fx:id="poistapainike" layoutX="278.0" layoutY="39.0" mnemonicParsing="false" onAction="#poistavaraus" text="Poista" />
             <Button fx:id="tallennapainike" layoutX="415.0" layoutY="39.0" mnemonicParsing="false" onAction="#tallennavaraus" text="Tallenna" />
          </children>
