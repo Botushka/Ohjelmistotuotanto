@@ -2,6 +2,7 @@ package com.example.ohjelmistotuotanto;
 
 import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
 import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.Asiakas;
+import com.example.ohjelmistotuotanto.NakymaHallinta.LaskuHallinta.Lasku;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
 
@@ -72,6 +73,22 @@ public class DatabaseManager {
         preparedStatement.setDouble(6, palvelu.getHinta());
         preparedStatement.setDouble(7, palvelu.getAlv());
         preparedStatement.setInt(8, palvelu.getPalvelu_id());
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
+        disconnect();
+    }
+    public void updateLasku(Lasku lasku) throws SQLException {
+        connect();
+
+        String sql = "UPDATE lasku SET lasku_id = ?, varaus_id = ?, summa = ?, alv = ? WHERE lasku_id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, lasku.getLaskuId());
+        preparedStatement.setInt(2, lasku.getVarausId());
+        preparedStatement.setDouble(3, lasku.getSumma());
+        preparedStatement.setDouble(4, lasku.getAlv());
+        preparedStatement.setInt(5, lasku.getLaskuId());
         int affectedRows = preparedStatement.executeUpdate();
         if (affectedRows == 0) {
             throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");

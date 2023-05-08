@@ -8,9 +8,11 @@ module com.example.ohjelmistotuotanto {
     opens com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta to java.base, javafx.fxml;
     opens com.example.ohjelmistotuotanto.NakymaHallinta.Alue to javafx.base, javafx.fxml;
     opens com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu to javafx.base, javafx.fxml;
+    opens com.example.ohjelmistotuotanto.NakymaHallinta.LaskuHallinta to javafx.fxml, javafx.base;
     exports com.example.ohjelmistotuotanto;
     exports com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta to javafx.fxml;
     exports com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu to javafx.base, javafx.fxml;
+    exports com.example.ohjelmistotuotanto.NakymaHallinta.LaskuHallinta to javafx.base, javafx.fxml;
 
 
 

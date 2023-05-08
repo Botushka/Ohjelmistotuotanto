@@ -21,7 +21,7 @@ public class Main extends Application {
     private PalveluHallintaController palveluHallintaView;
     private MajoitusvarausHallintaView majoitusvarausHallintaView;
     private AsiakashallintaView asiakashallintaView;
-
+    private LaskuHallintaController laskuHallintaController;
     public static void main(String[] args) {
         launch(args);
     }
@@ -32,6 +32,7 @@ public class Main extends Application {
         palveluHallintaView = new PalveluHallintaController();
         majoitusvarausHallintaView = new MajoitusvarausHallintaView();
         asiakashallintaView = new AsiakashallintaView();
+        laskuHallintaController = new LaskuHallintaController();
 
         MenuBar menuBar = createMenuBar();
         root.setTop(menuBar);
