@@ -74,7 +74,8 @@ public class Main extends Application {
 
         Menu majoitusvarausMenu = new Menu("Majoitusvaraus");
         MenuItem majoitusvarausMenuItem = new MenuItem("Hallinta");
-        majoitusvarausMenuItem.setOnAction(e -> root.setCenter(majoitusvarausHallintaView));
+        MajoitusHallintaController majoitusHallintaController = new MajoitusHallintaController();
+        majoitusvarausMenuItem.setOnAction(e -> root.setCenter(majoitusHallintaController));
         majoitusvarausMenu.getItems().add(majoitusvarausMenuItem);
 
         Menu asiakasMenu = new Menu("Asiakashallinta");
