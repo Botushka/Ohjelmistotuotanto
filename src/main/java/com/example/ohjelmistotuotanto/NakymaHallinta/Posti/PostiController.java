@@ -1,6 +1,7 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.Posti;
 
 import com.example.ohjelmistotuotanto.DatabaseManager;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
 import com.example.ohjelmistotuotanto.Olioluokat.Posti;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -43,6 +44,38 @@ public class PostiController extends BorderPane
     private String url = "jdbc:mysql://localhost:3306/vn";
     private String user = "root";
     private String password = "";
+    private Connection connection = null;
+
+    {
+        try {
+            connection = DriverManager.getConnection(url, user, password);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void updatePosti(Posti posti) {
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            String insertQuery = "INSERT INTO posti (postinro, toimipaikka) VALUES ( ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setString(1, posti.getPostinro());
+            preparedStatement.setString(2, posti.getToimipaikka());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void muokkaaPosti() throws SQLException {
+        Posti posti = postiTable.getSelectionModel().getSelectedItem();
+        DatabaseManager dbManager = new DatabaseManager(url, user,password);
+        dbManager.updatePosti(posti);
+    }
 
     private void naytaPostit(List<Posti> postit) {
         ObservableList<Posti> postiData = FXCollections.observableArrayList(postit);
@@ -60,6 +93,13 @@ public class PostiController extends BorderPane
             {
                 Posti posti1 = event.getRowValue();
                 posti1.setPostinro(event.getNewValue());
+                try
+                {
+                    muokkaaPosti();
+                } catch (SQLException e)
+                {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -72,7 +112,13 @@ public class PostiController extends BorderPane
             {
                 Posti posti1 = event.getRowValue();
                 posti1.setToimipaikka(event.getNewValue());
-
+                try
+                {
+                    muokkaaPosti();
+                } catch (SQLException e)
+                {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -85,11 +131,11 @@ public class PostiController extends BorderPane
         List<Posti> postit = new ArrayList<>();
 
         DatabaseManager dbmanager = new DatabaseManager(url, user, password);
-        ResultSet rs = dbmanager.retrieveData("Posti", new String[]{"postinro", "toimipaikka"});
+        ResultSet rs = dbmanager.retrieveData("posti", new String[]{"postinro", "toimipaikka"});
 
         while (rs.next()) {
             String postinro = rs.getString("postinro");
-            String toimipaikka = rs.getString("nimi");
+            String toimipaikka = rs.getString("toimipaikka");
             postit.add(new Posti(postinro, toimipaikka));
 
         }
@@ -113,6 +159,7 @@ public class PostiController extends BorderPane
         Posti uusiPosti = new Posti(postinroKentta.getText(), toimipaikkaKentta.getText());
 
         postiData.add(uusiPosti);
+        updatePosti(uusiPosti);
         postinroKentta.clear();
         toimipaikkaKentta.clear();
 

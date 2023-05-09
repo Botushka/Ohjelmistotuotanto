@@ -4,9 +4,11 @@ import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueHallintaController
 import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakasHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakashallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.LaskuHallinta.LaskuHallintaController;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusvarausHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu.PalveluHallintaController;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Posti.PostiController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -87,9 +89,14 @@ public class Main extends Application {
         laskuMenuItem.setOnAction(e -> root.setCenter(laskuHallintaController));
         laskumenu.getItems().add(laskuMenuItem);
 
-        menuBar.getMenus().addAll(MokkiMenu, AlueMenu, palveluMenu, majoitusvarausMenu, asiakasMenu, laskumenu);
+        Menu postimenu = new Menu("postihallinta");
+        MenuItem postiMenuItem = new MenuItem("Hallinta");
+        PostiController postiController = new PostiController();
+        postiMenuItem.setOnAction(e -> root.setCenter(postiController));
+        postimenu.getItems().add(postiMenuItem);
+
+        menuBar.getMenus().addAll(MokkiMenu, AlueMenu, palveluMenu, majoitusvarausMenu, asiakasMenu, laskumenu, postimenu);
 
         return menuBar;
     }
 }
-

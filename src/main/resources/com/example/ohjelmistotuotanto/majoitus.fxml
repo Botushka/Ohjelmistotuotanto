@@ -42,13 +42,8 @@
                </padding>
             </Label>
             <DatePicker fx:id="loppupvmkentta" />
-            <Label text="Vahvistuspäivämäärä:">
-               <padding>
-                  <Insets bottom="-15.0" />
-               </padding>
-            </Label>
-            <DatePicker fx:id="vahvistusKentta" editable="false" promptText="(Jätä tyhjäksi)" />
-            <TextField fx:id="varattuKentta" editable="false" promptText="Varauspäivä (auto)" text="27/04/2023" />
+            <TextField fx:id="alkupvmtxtKentta" promptText="alku" />
+            <TextField fx:id="loppupvmtxtKentta" promptText="loppu" />
             <Button fx:id="lisaapainike" mnemonicParsing="false" onAction="#lisaavaraus" text="Lisää" />
          </children>
       </VBox>

@@ -17,14 +17,27 @@ import javafx.util.converter.DateStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 public class MajoitusHallintaController extends BorderPane
 {
     @FXML
     private TableView<Varaus> varausTable;
+    @FXML
+    private TextField alkupvmtxtKentta;
+
+    @FXML
+    private TextField loppupvmtxtKentta;
 
     @FXML
     private TableColumn<Varaus, Integer> varausIDColumn;
@@ -45,8 +58,6 @@ public class MajoitusHallintaController extends BorderPane
     @FXML
     private TableColumn<Varaus, Date> varattuColumn;
     @FXML
-    private TextField varattuKentta;
-    @FXML
     private DatePicker alkupvmkentta;
     @FXML
     private ComboBox<Integer> aluekentta;
@@ -57,11 +68,9 @@ public class MajoitusHallintaController extends BorderPane
     @FXML
     private DatePicker loppupvmkentta;
     @FXML
-    private DatePicker vahvistusKentta;
-    @FXML
     private ComboBox<Integer> mokkikentta;
     @FXML
-    private ComboBox<Palvelu> palvelutkentta;
+    private ComboBox<Integer> palvelutkentta;
     @FXML
     private Button poistapainike;
     @FXML
@@ -76,6 +85,13 @@ public class MajoitusHallintaController extends BorderPane
     private String user = "root";
     private String password = "";
 
+    private Connection conn;
+    private PreparedStatement stmt;
+    private ResultSet rs;
+    private ObservableList<Integer> alueList = FXCollections.observableArrayList();
+    private ObservableList<Integer> mokkiList = FXCollections.observableArrayList();
+
+
     private DatabaseManager dbManager;
 
     private void naytaVaraukset(List<Varaus> varaukset)
@@ -84,49 +100,67 @@ public class MajoitusHallintaController extends BorderPane
         varausTable.setItems(varausData);
     }
 
-    public class SearchableComboBox extends ComboBox<String>
-    {
-        private final ObservableList<String> allItems;
-        private final TextField aluekentta1;
+    @FXML
+    public void alueComboBoxAction() {
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "root", "");
 
-        public SearchableComboBox(ObservableList<String> items)
-        {
-            super(items);
-            this.allItems = FXCollections.observableArrayList(items);
-            this.aluekentta1 = getEditor();
+            stmt = conn.prepareStatement("SELECT * FROM mokki WHERE alue_id = ?");
+            stmt.setInt(1, (aluekentta.getSelectionModel().getSelectedItem()));
+            rs = stmt.executeQuery();
 
-            //Set up filter listener
-            aluekentta1.textProperty().addListener((observable, oldValue, newValue) ->
-            {
-                String filter = newValue.trim();
-                if (filter.isEmpty())
-                {
-                    setItems(allItems);
-                    show();
-                } else {
-                    ObservableList<String> filteredItems = FXCollections.observableArrayList();
-                    for (String item : allItems)
-                    {
-                        if (item.toLowerCase().contains(filter.toLowerCase()))
-                        {
-                            filteredItems.add(item);
-                        }
-                    }
-                    setItems(filteredItems);
-                    if (!filter.isEmpty())
-                    {
-                        show();
-                    } else {
-                        hide();
-                    }
-                }
-            });
+            mokkiList.clear();
+
+            while (rs.next()) {
+                mokkiList.add(rs.getInt("mokki_id"));
+            }
+
+            mokkikentta.setItems(mokkiList);
+
+            stmt.close();
+            rs.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
 
     public void initialize()
     {
+        try
+        {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn","root","");
+            ResultSet rs = conn.createStatement().executeQuery("SELECT alue_id FROM mokki");
+
+            while (rs.next())
+            {
+                alueList.add(rs.getInt("alue_id"));
+            }
+            aluekentta.setItems(alueList);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        mokkikentta.disableProperty().bind(aluekentta.getSelectionModel().selectedItemProperty().isNull());
+        aluekentta.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            try
+            {
+                mokkiList.clear();
+                String sql = "SELECT mokki_id FROM mokki WHERE alue_id = ?";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                statement.setInt(1, newValue);
+                ResultSet rs = statement.executeQuery();
+                while (rs.next()) {
+                    mokkiList.add(rs.getInt("mokki_id"));
+                }
+                mokkikentta.setItems(mokkiList);
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+                });
+
         asiakasColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getAsiakas_id()).asObject());
         asiakasColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         asiakasColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Varaus, Integer>>()
@@ -224,44 +258,6 @@ public class MajoitusHallintaController extends BorderPane
         });
 
 
-        ObservableList<Integer> items = FXCollections.observableArrayList(1, 2, 3, 4, 5);
-        aluekentta.setItems(items);
-
-        aluekentta.setEditable(true);
-        aluekentta.setOnKeyReleased(event ->{
-            String input = aluekentta.getEditor().getText();
-            updateAluekentta(input);
-        });
-
-
-        ObservableList<Integer> items2 = FXCollections.observableArrayList(1, 2, 3, 4, 5);
-
-        asiakaskentta.setItems(items2);
-
-        asiakaskentta.setEditable(true);
-        asiakaskentta.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            asiakaskentta.hide();
-            asiakaskentta.getItems().setAll(filterItems2(newValue, items2));
-            asiakaskentta.setVisibleRowCount(Math.min(asiakaskentta.getItems().size(), 10));
-            asiakaskentta.show();
-        });
-
-        ObservableList<Integer> items3 = FXCollections.observableArrayList(1, 2, 3, 4, 5);
-
-        mokkikentta.setItems(items3);
-
-        mokkikentta.setEditable(true);
-        mokkikentta.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            mokkikentta.hide();
-            mokkikentta.getItems().setAll(filterItems3(newValue, items3));
-            mokkikentta.setVisibleRowCount(Math.min(asiakaskentta.getItems().size(), 10));
-            mokkikentta.show();
-        });
-
-        ObservableList<Integer> items4 = FXCollections.observableArrayList(1, 2, 3, 4, 5);
-
-        mokkikentta.setItems(items4);
-
 
         ObservableList<Varaus> varausData = FXCollections.observableArrayList(haeVarauksetTietokannasta());
         varausTable.setItems(varausData);
@@ -295,101 +291,55 @@ public class MajoitusHallintaController extends BorderPane
         });
     }
 
-    private List<Integer> filterOptions(String input)
-    {
-        List<Integer> options = FXCollections.observableArrayList(1,2,3,4,5);
-        return options.stream()
-                .filter(option -> option.toString().startsWith(input))
-                .collect(Collectors.toList());
-    }
 
-    private void updateAluekentta(String input){
-        List<Integer> filteredOptions = filterOptions(input);
-        aluekentta.setItems(FXCollections.observableArrayList(filteredOptions));
-    }
-    private List<Integer> filterItems(String text, ObservableList<Integer> items) {
-        if (text == null || text.isEmpty()) {
-            return new ArrayList<>(items);
-        }
-
-        List<Integer> filteredItems = new ArrayList<>();
-        for (Integer item : items) {
-            if (item.toString().toLowerCase().contains(text.toLowerCase())) {
-                filteredItems.add(item);
-            }
-        }
-        return filteredItems;
-    }
-    private List<Integer> filterItems2(String text, ObservableList<Integer> items2) {
-        if (text == null || text.isEmpty()) {
-            return new ArrayList<>(items2);
-        }
-
-        List<Integer> filteredItems = new ArrayList<>();
-        for (Integer item : items2) {
-            if (item.toString().toLowerCase().contains(text.toLowerCase())) {
-                filteredItems.add(item);
-            }
-        }
-        return filteredItems;
-    }
-    private List<Integer> filterItems3(String text, ObservableList<Integer> items3) {
-        if (text == null || text.isEmpty()) {
-            return new ArrayList<>(items3);
-        }
-
-        List<Integer> filteredItems = new ArrayList<>();
-        for (Integer item : items3) {
-            if (item.toString().toLowerCase().contains(text.toLowerCase())) {
-                filteredItems.add(item);
-            }
-        }
-        return filteredItems;
-    }
-    private List<Integer> filterItems4(String text, ObservableList<Integer> items4) {
-        if (text == null || text.isEmpty()) {
-            return new ArrayList<>(items4);
-        }
-
-        List<Integer> filteredItems = new ArrayList<>();
-        for (Integer item : items4) {
-            if (item.toString().toLowerCase().contains(text.toLowerCase())) {
-                filteredItems.add(item);
-            }
-        }
-        return filteredItems;
-    }
     private List<Varaus> haeVarauksetTietokannasta()
     {
         List<Varaus> varaus = new ArrayList<>();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-        Date newDate = new Date(0,0,0);
-        String formattedDate = dateFormat.format(newDate);
-        Date newDate2 = new Date(2020,1,1);
-        Date newDate3 = new Date(2019,9,9);
-        varaus.add(new Varaus(1,1,1,newDate,newDate2,newDate3,newDate));
+
         return varaus;
     }
     @FXML
     public void lisaapainike(ActionEvent event) {
 
-        // Generate unique idalue
         int newId = 1;
         ObservableList<Varaus> varausData = varausTable.getItems();
         if (!varausData.isEmpty()) {
-            // Sort the list by idalue in descending order
+
             varausData.sort(Comparator.comparingInt(Varaus::getVaraus_id).reversed());
-            // Get the highest idalue in the list and add 1 to generate a new idalue
+
             newId = varausData.get(0).getVaraus_id() + 1;
         }
 
-        Date varattuDate = java.sql.Date.valueOf(varattuKentta.getText());
-        Date vahvistusDate = java.sql.Date.valueOf(vahvistusKentta.getValue());
+        String dateStringAlku = loppupvmtxtKentta.getText();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        try {
+            date = dateFormat.parse(dateStringAlku);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        String dateStringLoppu = loppupvmtxtKentta.getText();
+        DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = null;
+        try {
+            date1 = dateFormat1.parse(dateStringLoppu);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         Date alkuDate = java.sql.Date.valueOf(alkupvmkentta.getValue());
         Date loppuDate = java.sql.Date.valueOf(loppupvmkentta.getValue());
 
-        Varaus uusiVaraus = new Varaus(newId, Integer.parseInt(asiakaskentta.getEditor().getText()),
-                Integer.parseInt(mokkikentta.getEditor().getText()), varattuDate,vahvistusDate, alkuDate, loppuDate);
+        LocalDate localDate = LocalDate.now();
+        ZoneId zoneId = ZoneId.systemDefault();
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(zoneId);
+        Instant instant = zonedDateTime.toInstant();
+        Date varattuDate = Date.from(instant);
+
+        Varaus uusiVaraus = new Varaus(1, 2,
+                3, varattuDate, varattuDate, date, date1);
 
         varausData.add(uusiVaraus);
 
@@ -397,8 +347,6 @@ public class MajoitusHallintaController extends BorderPane
         varausidkentta.clear();
         asiakaskentta.setValue(null);
         mokkikentta.setValue(null);
-        varattuKentta.clear();
-        vahvistusKentta.setValue(null);
         alkupvmkentta.setValue(null);
         loppupvmkentta.setValue(null);
 

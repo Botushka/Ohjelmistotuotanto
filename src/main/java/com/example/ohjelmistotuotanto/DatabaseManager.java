@@ -5,6 +5,7 @@ import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.Asiakas;
 import com.example.ohjelmistotuotanto.NakymaHallinta.LaskuHallinta.Lasku;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
+import com.example.ohjelmistotuotanto.Olioluokat.Posti;
 
 import java.sql.*;
 
@@ -140,5 +141,21 @@ public class DatabaseManager {
 
         Statement statement = connection.createStatement();
         return statement.executeQuery(sql);
+    }
+
+    public void updatePosti(Posti posti) throws SQLException
+    {
+        connect();
+
+        String sql = "UPDATE posti SET postinro = ?, toimipaikka = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,posti.getPostinro());
+        preparedStatement.setString(2, posti.getToimipaikka());
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0)
+        {
+            throw new SQLException("jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
+        disconnect();
     }
 }

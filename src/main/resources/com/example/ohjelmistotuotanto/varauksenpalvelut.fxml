@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="755.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane prefHeight="200.0" prefWidth="1259.0" style="-fx-background-color: BLUE;">
@@ -25,20 +24,20 @@
       </Pane>
       <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="87.0" layoutY="233.0" prefHeight="503.0" prefWidth="288.0" spacing="25.0">
          <children>
-            <ComboBox fx:id="varausIdKentta" editable="true" prefWidth="150.0" promptText="varaus_id" />
-            <ComboBox fx:id="palveluIdKentta" editable="true" prefWidth="150.0" promptText="palvelu_id" />
+            <ComboBox fx:id="varausidComboBox" editable="true" prefWidth="150.0" promptText="varaus_id" />
+            <ComboBox fx:id="palveluidComboBOx" editable="true" prefWidth="150.0" promptText="palvelu_id" />
             <TextField fx:id="lukumaaraKentta" promptText="lukumäärä" />
-            <Button mnemonicParsing="false" text="Lisää" />
+            <Button fx:id="lisaaNappain" mnemonicParsing="false" text="Lisää" />
          </children>
       </VBox>
-      <TableView layoutX="453.0" layoutY="294.0" prefHeight="447.0" prefWidth="435.0">
+      <TableView layoutX="432.0" layoutY="281.0" prefHeight="300.0" prefWidth="542.0">
         <columns>
-          <TableColumn prefWidth="110.0" text="Varaus ID" />
-          <TableColumn prefWidth="176.0" text="Palvelu ID" />
-            <TableColumn prefWidth="148.0" text="lkm" />
+          <TableColumn fx:id="varausidColumn" prefWidth="163.0" text="Varaus ID" />
+          <TableColumn fx:id="palveluidColumn" prefWidth="180.0" text="Palvelu ID" />
+            <TableColumn fx:id="lukumaaraColumn" prefWidth="198.0" text="lkm" />
         </columns>
       </TableView>
-      <Button layoutX="776.0" layoutY="240.0" mnemonicParsing="false" text="Poista" />
-      <TextField layoutX="481.0" layoutY="240.0" promptText="Hae..." />
+      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" text="Poista" />
+      <TextField fx:id="hakuKentta" layoutX="481.0" layoutY="228.0" promptText="Hae..." />
    </children>
 </AnchorPane>
