@@ -14,58 +14,54 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="670.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Pane prefHeight="163.0" prefWidth="1118.0" style="-fx-background-color: BLUE;">
-         <children>
-            <Label layoutX="488.0" layoutY="68.0" text="Varausten hallinta" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="37.0" layoutY="208.0" prefHeight="457.0" prefWidth="274.0" spacing="20.0">
-         <children>
-            <TextField fx:id="varausidkentta" editable="false" promptText="Varaus_ID (auto)" />
-            <ComboBox fx:id="asiakaskentta" editable="true" prefWidth="150.0" promptText="Valitse asiakas..." />
-            <ComboBox fx:id="aluekentta" editable="true" prefWidth="150.0" promptText="Valitse alue..." />
-            <ComboBox fx:id="mokkikentta" editable="true" prefWidth="150.0" promptText="Valitse mökki..." />
-            <Label text="Alkupäivämäärä:">
-               <padding>
-                  <Insets bottom="-15.0" />
-               </padding>
-            </Label>
-            <DatePicker fx:id="alkupvmkentta" />
-            <Label text="Loppupäivämäärä:">
-               <padding>
-                  <Insets bottom="-15.0" />
-               </padding>
-            </Label>
-            <DatePicker fx:id="loppupvmkentta" />
-            <TextField fx:id="alkupvmtxtKentta" promptText="alku" />
-            <TextField fx:id="loppupvmtxtKentta" promptText="loppu" />
-            <Button fx:id="lisaapainike" mnemonicParsing="false" onAction="#lisaavaraus" text="Lisää" />
-         </children>
-      </VBox>
-      <Pane layoutX="332.0" layoutY="167.0" prefHeight="496.0" prefWidth="777.0">
-         <children>
-            <TableView fx:id="varausTable" layoutY="92.0" prefHeight="404.0" prefWidth="777.0">
-              <columns>
-                  <TableColumn fx:id="varausIDColumn" prefWidth="75.0" text="Varaus ID" />
-                <TableColumn fx:id="asiakasColumn" prefWidth="75.0" text="Asiakas" />
-                <TableColumn fx:id="alueColumn" prefWidth="75.0" text="Alue" />
-                  <TableColumn fx:id="mokkiColumn" prefWidth="75.0" text="Mökki" />
-                  <TableColumn fx:id="varattuColumn" prefWidth="91.0" text="Varattu pvm:" />
-                  <TableColumn fx:id="alkupvmColumn" prefWidth="59.0" text="Alkupvm" />
-                  <TableColumn fx:id="loppupvmColumn" prefWidth="75.0" text="Loppupvm" />
-                  <TableColumn fx:id="palvelutColumn" prefWidth="103.0" text="Palvelut" />
-                  <TableColumn fx:id="vahvistettuColumn" prefWidth="148.0" text="Vahvistettu pvm" />
-              </columns>
-            </TableView>
-            <TextField fx:id="haevaraus" layoutX="45.0" layoutY="39.0" promptText="Hae varausta..." />
-            <Button fx:id="poistapainike" layoutX="278.0" layoutY="39.0" mnemonicParsing="false" onAction="#poistavaraus" text="Poista" />
-            <Button fx:id="tallennapainike" layoutX="415.0" layoutY="39.0" mnemonicParsing="false" onAction="#tallennavaraus" text="Tallenna" />
-         </children>
-      </Pane>
-   </children>
+    <children>
+        <Pane prefHeight="163.0" prefWidth="1118.0" style="-fx-background-color: BLUE;">
+            <children>
+                <Label layoutX="488.0" layoutY="68.0" text="Varausten hallinta" textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="37.0" layoutY="208.0" prefHeight="457.0" prefWidth="274.0" spacing="20.0">
+            <children>
+                <TextField fx:id="varausidkentta" editable="false" promptText="Varaus_ID (auto)" />
+                <ComboBox fx:id="asiakaskentta" editable="true" prefWidth="150.0" promptText="Valitse asiakas..." />
+                <ComboBox fx:id="aluekentta" editable="true" prefWidth="150.0" promptText="Valitse alue..." />
+                <ComboBox fx:id="mokkikentta" editable="true" prefWidth="150.0" promptText="Valitse mökki..." />
+                <Label text="Alkupäivämäärä:">
+                    <padding>
+                        <Insets bottom="-15.0" />
+                    </padding>
+                </Label>
+                <DatePicker fx:id="alkupvmkentta" />
+                <Label text="Loppupäivämäärä:">
+                    <padding>
+                        <Insets bottom="-15.0" />
+                    </padding>
+                </Label>
+                <DatePicker fx:id="loppupvmkentta" />
+                <Button fx:id="lisaapainike" mnemonicParsing="false" onAction="#lisaavaraus" text="Lisää" />
+            </children>
+        </VBox>
+        <Pane layoutX="332.0" layoutY="167.0" prefHeight="496.0" prefWidth="777.0">
+            <children>
+                <TableView fx:id="varausTable" layoutY="92.0" prefHeight="404.0" prefWidth="777.0">
+                    <columns>
+                        <TableColumn fx:id="varausIDColumn" prefWidth="75.0" text="Varaus ID" />
+                        <TableColumn fx:id="asiakasColumn" prefWidth="75.0" text="Asiakas" />
+                        <TableColumn fx:id="mokkiColumn" prefWidth="75.0" text="Mökki" />
+                        <TableColumn fx:id="varattuColumn" prefWidth="118.0" text="Varattu pvm:" />
+                        <TableColumn fx:id="alkupvmColumn" prefWidth="103.0" text="Alkupvm" />
+                        <TableColumn fx:id="loppupvmColumn" prefWidth="120.0" text="Loppupvm" />
+                        <TableColumn fx:id="vahvistettuColumn" prefWidth="210.0" text="Vahvistettu pvm" />
+                    </columns>
+                </TableView>
+                <TextField fx:id="haevaraus" layoutX="45.0" layoutY="39.0" promptText="Hae varausta..." />
+                <Button fx:id="poistapainike" layoutX="278.0" layoutY="39.0" mnemonicParsing="false" onAction="#poistavaraus" text="Poista" />
+                <Button fx:id="tallennapainike" layoutX="415.0" layoutY="39.0" mnemonicParsing="false" onAction="#tallennavaraus" text="Tallenna" />
+            </children>
+        </Pane>
+    </children>
 </AnchorPane>

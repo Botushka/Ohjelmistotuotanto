@@ -30,14 +30,14 @@
             <Button fx:id="lisaaNappain" mnemonicParsing="false" text="Lisää" />
          </children>
       </VBox>
-      <TableView layoutX="432.0" layoutY="281.0" prefHeight="300.0" prefWidth="542.0">
+      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" text="Poista" />
+      <TextField fx:id="hakuKentta" layoutX="481.0" layoutY="228.0" promptText="Hae..." />
+      <TableView fx:id="varatutPalvelut" layoutX="432.0" layoutY="281.0" prefHeight="300.0" prefWidth="542.0">
         <columns>
           <TableColumn fx:id="varausidColumn" prefWidth="163.0" text="Varaus ID" />
           <TableColumn fx:id="palveluidColumn" prefWidth="180.0" text="Palvelu ID" />
             <TableColumn fx:id="lukumaaraColumn" prefWidth="198.0" text="lkm" />
         </columns>
       </TableView>
-      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" text="Poista" />
-      <TextField fx:id="hakuKentta" layoutX="481.0" layoutY="228.0" promptText="Hae..." />
    </children>
 </AnchorPane>
