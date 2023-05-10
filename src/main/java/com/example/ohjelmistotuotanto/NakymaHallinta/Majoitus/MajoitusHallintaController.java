@@ -92,10 +92,10 @@ public class MajoitusHallintaController extends BorderPane
             preparedStatement.setInt(1, varaus.getVaraus_id());
             preparedStatement.setInt(2, varaus.getAsiakas_id());
             preparedStatement.setInt(3,varaus.getMokki_id());
-            preparedStatement.setDate(4, (java.sql.Date) varaus.getVarattu_pvm());
-            preparedStatement.setDate(5, (java.sql.Date) varaus.getVahvistus_pvm());
-            preparedStatement.setDate(6, (java.sql.Date) varaus.getVarattu_alkupvm());
-            preparedStatement.setDate(7, (java.sql.Date) varaus.getVarattu_loppupvm());
+            preparedStatement.setDate(4, new java.sql.Date(varaus.getVarattu_pvm().getTime()));
+            preparedStatement.setDate(5, new java.sql.Date(varaus.getVahvistus_pvm().getTime()));
+            preparedStatement.setDate(6, new java.sql.Date(varaus.getVarattu_alkupvm().getTime()));
+            preparedStatement.setDate(7, new java.sql.Date(varaus.getVarattu_loppupvm().getTime()));
 
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0) {
