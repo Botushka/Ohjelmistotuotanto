@@ -115,8 +115,8 @@ public class LaskuHallintaController extends BorderPane {
         laskualvcolumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Lasku, Double>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Lasku, Double> event) {
-                Lasku hinta = event.getRowValue();
-                hinta.setAlv(event.getNewValue());
+                Lasku alv = event.getRowValue();
+                alv.setAlv(event.getNewValue());
                 try {
                     muokkaaLasku();
                 } catch (SQLException e) {
@@ -189,8 +189,6 @@ public class LaskuHallintaController extends BorderPane {
             e.printStackTrace();
         }
     }
-    @FXML
-    public void poistalasku(){}
     private List<Lasku> haePalvelutTietokannasta() throws SQLException {
         List<Lasku> palvelut = new ArrayList<>();
         DatabaseManager dbmanager = new DatabaseManager(url, user, password);
@@ -215,7 +213,7 @@ public class LaskuHallintaController extends BorderPane {
     }
 
     @FXML
-    public void poistapalvelu(ActionEvent event) {
+    public void poistalasku(ActionEvent event) {
         Lasku valittuPalvelu = laskutableview.getSelectionModel().getSelectedItem();
         if (valittuPalvelu != null) {
             TableView.TableViewSelectionModel<Lasku> selectionModel = laskutableview.getSelectionModel();
