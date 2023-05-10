@@ -9,6 +9,7 @@ import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusvarausHall
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu.PalveluHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Posti.PostiController;
+import com.example.ohjelmistotuotanto.NakymaHallinta.VarauksenPalvelut.VarauksenPalvelutController;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -96,7 +97,13 @@ public class Main extends Application {
         postiMenuItem.setOnAction(e -> root.setCenter(postiController));
         postimenu.getItems().add(postiMenuItem);
 
-        menuBar.getMenus().addAll(MokkiMenu, AlueMenu, palveluMenu, majoitusvarausMenu, asiakasMenu, laskumenu, postimenu);
+        Menu varauksenpalvelutmenu = new Menu("Varauksen Palveluiden Hallinta");
+        MenuItem varauksenpalveluItem = new MenuItem("Hallinta");
+        VarauksenPalvelutController varauksenPalvelutController = new VarauksenPalvelutController();
+        varauksenpalveluItem.setOnAction(e -> root.setCenter(varauksenPalvelutController));
+        varauksenpalvelutmenu.getItems().add(varauksenpalveluItem);
+
+        menuBar.getMenus().addAll(MokkiMenu, AlueMenu, palveluMenu, majoitusvarausMenu, asiakasMenu, laskumenu, postimenu, varauksenpalvelutmenu);
 
         return menuBar;
     }

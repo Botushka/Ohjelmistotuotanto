@@ -24,6 +24,24 @@
                 </Label>
             </children>
         </Pane>
+        <Pane layoutX="332.0" layoutY="167.0" prefHeight="496.0" prefWidth="777.0">
+            <children>
+                <TextField fx:id="haevaraus" layoutX="45.0" layoutY="39.0" promptText="Hae varausta..." />
+                <TableView fx:id="varausTable" editable="true" layoutY="92.0" prefHeight="404.0" prefWidth="777.0">
+                    <columns>
+                        <TableColumn fx:id="varausIDColumn" prefWidth="75.0" text="Varaus ID" />
+                        <TableColumn fx:id="asiakasColumn" prefWidth="75.0" text="Asiakas" />
+                        <TableColumn fx:id="mokkiColumn" prefWidth="75.0" text="Mökki" />
+                        <TableColumn fx:id="varattuColumn" prefWidth="118.0" text="Varattu pvm:" />
+                        <TableColumn fx:id="alkupvmColumn" prefWidth="103.0" text="Alkupvm" />
+                        <TableColumn fx:id="loppupvmColumn" prefWidth="120.0" text="Loppupvm" />
+                        <TableColumn fx:id="vahvistettuColumn" prefWidth="210.0" text="Vahvistettu pvm" />
+                    </columns>
+                </TableView>
+                <Button fx:id="poistapainike" layoutX="278.0" layoutY="39.0" mnemonicParsing="false" onAction="#poistavaraus" text="Poista" />
+                <Button fx:id="tallennapainike" layoutX="415.0" layoutY="39.0" mnemonicParsing="false" onAction="#tallennavaraus" text="Tallenna" />
+            </children>
+        </Pane>
         <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="37.0" layoutY="208.0" prefHeight="457.0" prefWidth="274.0" spacing="20.0">
             <children>
                 <TextField fx:id="varausidkentta" editable="false" promptText="Varaus_ID (auto)" />
@@ -45,23 +63,5 @@
                 <Button fx:id="lisaapainike" mnemonicParsing="false" onAction="#lisaavaraus" text="Lisää" />
             </children>
         </VBox>
-        <Pane layoutX="332.0" layoutY="167.0" prefHeight="496.0" prefWidth="777.0">
-            <children>
-                <TableView fx:id="varausTable" layoutY="92.0" prefHeight="404.0" prefWidth="777.0">
-                    <columns>
-                        <TableColumn fx:id="varausIDColumn" prefWidth="75.0" text="Varaus ID" />
-                        <TableColumn fx:id="asiakasColumn" prefWidth="75.0" text="Asiakas" />
-                        <TableColumn fx:id="mokkiColumn" prefWidth="75.0" text="Mökki" />
-                        <TableColumn fx:id="varattuColumn" prefWidth="118.0" text="Varattu pvm:" />
-                        <TableColumn fx:id="alkupvmColumn" prefWidth="103.0" text="Alkupvm" />
-                        <TableColumn fx:id="loppupvmColumn" prefWidth="120.0" text="Loppupvm" />
-                        <TableColumn fx:id="vahvistettuColumn" prefWidth="210.0" text="Vahvistettu pvm" />
-                    </columns>
-                </TableView>
-                <TextField fx:id="haevaraus" layoutX="45.0" layoutY="39.0" promptText="Hae varausta..." />
-                <Button fx:id="poistapainike" layoutX="278.0" layoutY="39.0" mnemonicParsing="false" onAction="#poistavaraus" text="Poista" />
-                <Button fx:id="tallennapainike" layoutX="415.0" layoutY="39.0" mnemonicParsing="false" onAction="#tallennavaraus" text="Tallenna" />
-            </children>
-        </Pane>
     </children>
 </AnchorPane>

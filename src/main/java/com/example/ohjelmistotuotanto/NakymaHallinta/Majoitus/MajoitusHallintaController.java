@@ -1,5 +1,6 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus;
 import com.example.ohjelmistotuotanto.DatabaseManager;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Alue.AlueOlio;
 import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
 import com.example.ohjelmistotuotanto.Olioluokat.Varaus;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -81,9 +82,37 @@ public class MajoitusHallintaController extends BorderPane
     private ObservableList<Integer> asiakasList = FXCollections.observableArrayList();
     private ObservableList<Integer> alueList = FXCollections.observableArrayList();
     private ObservableList<Integer> mokkiList = FXCollections.observableArrayList();
-
-
     private DatabaseManager dbManager;
+
+    private void updateVaraus(Varaus varaus) {
+        try {
+            Connection conn = DriverManager.getConnection(url, user, password);
+            String insertQuery = "INSERT INTO varaus (varaus_id, asiakas_id, mokki_mokki_id, varattu_pvm, vahvistus_pvm, varattu_alkupvm, varattu_loppupvm) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setInt(1, varaus.getVaraus_id());
+            preparedStatement.setInt(2, varaus.getAsiakas_id());
+            preparedStatement.setInt(3,varaus.getMokki_id());
+            preparedStatement.setDate(4, (java.sql.Date) varaus.getVarattu_pvm());
+            preparedStatement.setDate(5, (java.sql.Date) varaus.getVahvistus_pvm());
+            preparedStatement.setDate(6, (java.sql.Date) varaus.getVarattu_alkupvm());
+            preparedStatement.setDate(7, (java.sql.Date) varaus.getVarattu_loppupvm());
+
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+            }
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void muokkaaVaraus() throws SQLException {
+        Varaus varaus = varausTable.getSelectionModel().getSelectedItem();
+        DatabaseManager dbManager = new DatabaseManager(url, user,password);
+        dbManager.updateVaraus(varaus);
+
+    }
 
     private void naytaVaraukset(List<Varaus> varaukset)
     {
@@ -91,34 +120,11 @@ public class MajoitusHallintaController extends BorderPane
         varausTable.setItems(varausData);
     }
 
-    @FXML
-    public void alueComboBoxAction() {
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "root", "");
-
-            stmt = conn.prepareStatement("SELECT * FROM mokki WHERE alue_id = ?");
-            stmt.setInt(1, (aluekentta.getSelectionModel().getSelectedItem()));
-            rs = stmt.executeQuery();
-
-            mokkiList.clear();
-
-            while (rs.next()) {
-                mokkiList.add(rs.getInt("mokki_id"));
-            }
-
-            mokkikentta.setItems(mokkiList);
-
-            stmt.close();
-            rs.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
 
 
-    public void initialize()
+
+    public void initialize() throws SQLException
     {
         try
         {
@@ -163,12 +169,25 @@ public class MajoitusHallintaController extends BorderPane
                 PreparedStatement statement = conn.prepareStatement(sql);
                 statement.setInt(1, newValue);
                 ResultSet rs = statement.executeQuery();
+
                 while (rs.next()) {
                     mokkiList.add(rs.getInt("mokki_id"));
                 }
                 mokkikentta.setItems(mokkiList);
             }catch (SQLException e){
                 e.printStackTrace();
+            }
+        });
+
+        varausIDColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getVaraus_id()).asObject());
+        varausIDColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        varausIDColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Varaus, Integer>>()
+        {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Varaus, Integer> event)
+            {
+                Varaus varaus = event.getRowValue();
+                varaus.setVaraus_id(event.getNewValue());
             }
         });
 
@@ -197,47 +216,10 @@ public class MajoitusHallintaController extends BorderPane
             }
         });
 
-        alkupvmColumn.setCellFactory(column -> {
-            TableCell<Varaus, Date> cell = new TableCell<Varaus, Date>() {
-                private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
-                @Override
-                protected void updateItem(Date item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(empty) {
-                        setText(null);
-                    }
-                    else {
-                        this.setText(format.format(item));
-
-                    }
-                }
-            };
-
-            return cell;
-        });
 
         varattuColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getVarattu_pvm()));
         varattuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
-        varattuColumn.setCellFactory(column -> {
-            TableCell<Varaus, Date> cell = new TableCell<Varaus, Date>() {
-                private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
-                @Override
-                protected void updateItem(Date item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(empty) {
-                        setText(null);
-                    }
-                    else {
-                        this.setText(format.format(item));
-
-                    }
-                }
-            };
-
-            return cell;
-        });
         varattuColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Varaus, Date>>()
         {
             @Override
@@ -262,25 +244,6 @@ public class MajoitusHallintaController extends BorderPane
 
         loppupvmColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getVarattu_loppupvm()));
         loppupvmColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
-        loppupvmColumn.setCellFactory(column -> {
-            TableCell<Varaus, Date> cell = new TableCell<Varaus, Date>() {
-                private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
-                @Override
-                protected void updateItem(Date item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(empty) {
-                        setText(null);
-                    }
-                    else {
-                        this.setText(format.format(item));
-
-                    }
-                }
-            };
-
-            return cell;
-        });
         loppupvmColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Varaus, Date>>()
         {
             @Override
@@ -293,25 +256,6 @@ public class MajoitusHallintaController extends BorderPane
 
         vahvistettuColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getVahvistus_pvm()));
         vahvistettuColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
-        vahvistettuColumn.setCellFactory(column -> {
-            TableCell<Varaus, Date> cell = new TableCell<Varaus, Date>() {
-                private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-
-                @Override
-                protected void updateItem(Date item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if(empty) {
-                        setText(null);
-                    }
-                    else {
-                        this.setText(format.format(item));
-
-                    }
-                }
-            };
-
-            return cell;
-        });
         vahvistettuColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Varaus, Date>>()
         {
             @Override
@@ -355,10 +299,22 @@ public class MajoitusHallintaController extends BorderPane
     }
 
 
-    private List<Varaus> haeVarauksetTietokannasta()
-    {
+    private List<Varaus> haeVarauksetTietokannasta() throws SQLException {
         List<Varaus> varaus = new ArrayList<>();
 
+        DatabaseManager dbmanager = new DatabaseManager(url, user, password);
+        ResultSet rs = dbmanager.retrieveData("varaus", new String[]{"varaus_id", "asiakas_id", "mokki_mokki_id", "varattu_pvm", "vahvistus_pvm","varattu_alkupvm","varattu_loppupvm"});
+
+        while (rs.next()) {
+            int varausId = rs.getInt("varaus_id");
+            int asiakasId = rs.getInt("asiakas_id");
+            int mokkiId = rs.getInt("mokki_mokki_id");
+            Date varattupvm = rs.getDate("varattu_pvm");
+            Date vahvistuspvm = rs.getDate("vahvistus_pvm");
+            Date varattuAlkupvm = rs.getDate("varattu_alkupvm");
+            Date varattuLoppupvm = rs.getDate("varattu_loppupvm");
+            varaus.add(new Varaus(varausId,asiakasId,mokkiId,varattupvm,vahvistuspvm,varattuAlkupvm,varattuLoppupvm));
+        }
         return varaus;
     }
     @FXML
@@ -389,6 +345,7 @@ public class MajoitusHallintaController extends BorderPane
                 Integer.parseInt(mokkikentta.getEditor().getText()), varattuDate, tempDate, alkuDate, loppuDate);
 
         varausData.add(uusiVaraus);
+        updateVaraus(uusiVaraus);
 
         // Clear the input fields
         varausidkentta.clear();
@@ -412,8 +369,30 @@ public class MajoitusHallintaController extends BorderPane
     }
 
     @FXML
-    void poistavaraus(ActionEvent event) {
+    private void poistavaraus(ActionEvent event) {
+        Varaus valittuVaraus = varausTable.getSelectionModel().getSelectedItem();
+        if (valittuVaraus != null) {
+            TableView.TableViewSelectionModel<Varaus> selectionModel = varausTable.getSelectionModel();
+            ObservableList<Varaus> tableItems = varausTable.getItems();
+            int selectedIndex = selectionModel.getSelectedIndex();
+            tableItems.remove(selectedIndex);
+            varausTable.setItems(tableItems);
+            varausTable.refresh();
 
+            try {
+                Connection conn = DriverManager.getConnection(url, user, password);
+                String deleteQuery = "DELETE FROM varaus WHERE varaus_id = ?";
+                PreparedStatement preparedStatement = conn.prepareStatement(deleteQuery);
+                preparedStatement.setInt(1, valittuVaraus.getVaraus_id());
+                int affectedRows = preparedStatement.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("Jokin meni pieleen tiedon poistamisessa tietokannasta");
+                }
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML

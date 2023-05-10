@@ -27,12 +27,12 @@
             <ComboBox fx:id="varausidComboBox" editable="true" prefWidth="150.0" promptText="varaus_id" />
             <ComboBox fx:id="palveluidComboBOx" editable="true" prefWidth="150.0" promptText="palvelu_id" />
             <TextField fx:id="lukumaaraKentta" promptText="lukumäärä" />
-            <Button fx:id="lisaaNappain" mnemonicParsing="false" text="Lisää" />
+            <Button fx:id="lisaaNappain" mnemonicParsing="false" onAction="#lisaaVarattuPalvelu" text="Lisää" />
          </children>
       </VBox>
-      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" text="Poista" />
+      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" onAction="#poistaVarauksenPalvelu" text="Poista" />
       <TextField fx:id="hakuKentta" layoutX="481.0" layoutY="228.0" promptText="Hae..." />
-      <TableView fx:id="varatutPalvelut" layoutX="432.0" layoutY="281.0" prefHeight="300.0" prefWidth="542.0">
+      <TableView fx:id="varatutPalvelutTable" layoutX="432.0" layoutY="281.0" prefHeight="300.0" prefWidth="542.0">
         <columns>
           <TableColumn fx:id="varausidColumn" prefWidth="163.0" text="Varaus ID" />
           <TableColumn fx:id="palveluidColumn" prefWidth="180.0" text="Palvelu ID" />

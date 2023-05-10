@@ -6,8 +6,11 @@ import com.example.ohjelmistotuotanto.NakymaHallinta.LaskuHallinta.Lasku;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
 import com.example.ohjelmistotuotanto.Olioluokat.Posti;
+import com.example.ohjelmistotuotanto.Olioluokat.VarauksenPalvelut;
+import com.example.ohjelmistotuotanto.Olioluokat.Varaus;
 
 import java.sql.*;
+import java.util.List;
 
 public class DatabaseManager {
     private Connection connection;
@@ -129,6 +132,39 @@ public class DatabaseManager {
             throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
         }
         disconnect();
+    }
+
+    public void updateVaraus(Varaus varaus) throws SQLException {
+        connect();
+
+        String sql = "UPDATE varaus SET varaus_id = ?,asiakas_id = ?,mokki_mokki_id = ?,varattu_pvm = ?,vahvistus_pvm = ?,varattu_alkupvm = ?,varattu_loppupvm = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, varaus.getVaraus_id());
+        preparedStatement.setInt(2, varaus.getAsiakas_id());
+        preparedStatement.setInt(3,varaus.getMokki_id());
+        preparedStatement.setDate(4, (java.sql.Date) varaus.getVarattu_pvm());
+        preparedStatement.setDate(5, (java.sql.Date) varaus.getVahvistus_pvm());
+        preparedStatement.setDate(6, (java.sql.Date) varaus.getVarattu_alkupvm());
+        preparedStatement.setDate(7, (java.sql.Date) varaus.getVarattu_loppupvm());
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
+        disconnect();
+    }
+
+    public void updateVarauksenPalvelut(VarauksenPalvelut varaus) throws SQLException {
+        connect();
+
+        String sql = "UPDATE varauksen_palvelut SET varaus_id = ?, palvelu_id = ?, lkm = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, varaus.getVaraus_id());
+        preparedStatement.setInt(2, varaus.getPalvelu_id());
+        preparedStatement.setInt(3, varaus.getLkm());
+        int affectedRows = preparedStatement.executeUpdate();
+        if (affectedRows == 0) {
+            throw  new SQLException("Jokin meni pieleen tiedon tallentamisessa tietokantaan");
+        }
     }
     public ResultSet retrieveData(String tableName, String[] columnNames) throws SQLException {
         connect();
