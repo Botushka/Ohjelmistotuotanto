@@ -121,9 +121,6 @@ public class MajoitusHallintaController extends BorderPane
     }
 
 
-
-
-
     public void initialize() throws SQLException
     {
         try

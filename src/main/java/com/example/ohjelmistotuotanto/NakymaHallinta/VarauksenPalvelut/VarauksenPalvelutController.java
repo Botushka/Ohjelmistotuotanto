@@ -69,32 +69,6 @@ public class VarauksenPalvelutController extends BorderPane
         dbManager.updateVarauksenPalvelut(varauksenPalvelut);
     }
 
-    @FXML
-    public void alueComboBoxAction() {
-        try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "root", "");
-
-            stmt = conn.prepareStatement("SELECT * FROM palvelu WHERE palvelu_id = ?");
-            stmt.setInt(1, (palveluidComboBOx.getSelectionModel().getSelectedItem()));
-            rs = stmt.executeQuery();
-
-            palveluIdList.clear();
-
-            while (rs.next()) {
-                palveluIdList.add(rs.getInt("palvelu_id"));
-            }
-
-            palveluidComboBOx.setItems(palveluIdList);
-
-            stmt.close();
-            rs.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public void initialize() throws SQLException
     {
         try
@@ -107,7 +81,7 @@ public class VarauksenPalvelutController extends BorderPane
 
             while (rs.next())
             {
-                varausIdList.add(rs.getInt("varaus_id"));
+                varausIds.add(rs.getInt("varaus_id"));
             }
             varausidComboBox.setItems(varausIds);
             conn.close();
@@ -120,13 +94,17 @@ public class VarauksenPalvelutController extends BorderPane
         try
         {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn", "root", "");
-            ResultSet rs = conn.createStatement().executeQuery("SELECT palvelu_id FROM palvelu");
+            String query = "SELECT DISTINCT palvelu_id FROM palvelu";
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            ObservableList<Integer> palveluIds = FXCollections.observableArrayList();
 
             while (rs.next())
             {
-                palveluIdList.add(rs.getInt("palvelu_id"));
+                palveluIds.add(rs.getInt("palvelu_id"));
             }
-            palveluidComboBOx.setItems(palveluIdList);
+            palveluidComboBOx.setItems(palveluIds);
+            conn.close();
 
         } catch (SQLException e)
         {
@@ -220,7 +198,7 @@ public class VarauksenPalvelutController extends BorderPane
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
             preparedStatement.setInt(1, varaus.getVaraus_id());
             preparedStatement.setInt(2, varaus.getPalvelu_id());
-            preparedStatement.setInt(2, varaus.getLkm());
+            preparedStatement.setInt(3, varaus.getLkm());
             int affectedRows = preparedStatement.executeUpdate();
             if (affectedRows == 0)
             {
@@ -246,6 +224,7 @@ public class VarauksenPalvelutController extends BorderPane
         updateVarauksenPalvelut(newVaraus);
         varausidComboBox.setValue(null);
         palveluidComboBOx.setValue(null);
+        lukumaaraKentta.clear();
 
         naytaVaratutPalvelut(varausData);
     }
