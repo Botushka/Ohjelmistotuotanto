@@ -15,11 +15,12 @@
 
 <AnchorPane prefHeight="670.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Pane prefHeight="163.0" prefWidth="1118.0" style="-fx-background-color: BLUE;">
+      <Pane prefHeight="673.0" prefWidth="1119.0" style="-fx-background-color: #1a1a1a;" />
+        <Pane prefHeight="163.0" prefWidth="1118.0" style="-fx-background-color: #1a1a1a;">
             <children>
-                <Label layoutX="488.0" layoutY="68.0" text="Varausten hallinta" textFill="WHITE">
+                <Label layoutX="465.0" layoutY="65.0" text="Varausten hallinta" textFill="WHITE">
                     <font>
-                        <Font size="18.0" />
+                        <Font size="28.0" />
                     </font>
                 </Label>
             </children>
@@ -38,8 +39,8 @@
                         <TableColumn fx:id="vahvistettuColumn" prefWidth="210.0" text="Vahvistettu pvm" />
                     </columns>
                 </TableView>
-                <Button fx:id="poistapainike" layoutX="278.0" layoutY="39.0" mnemonicParsing="false" onAction="#poistavaraus" text="Poista" />
-                <Button fx:id="tallennapainike" layoutX="415.0" layoutY="39.0" mnemonicParsing="false" onAction="#tallennavaraus" text="Tallenna" />
+                <Button fx:id="poistapainike" layoutX="278.0" layoutY="39.0" mnemonicParsing="false" onAction="#poistavaraus" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
+                <Button fx:id="tallennapainike" layoutX="415.0" layoutY="39.0" mnemonicParsing="false" onAction="#tallennavaraus" style="-fx-background-color: #ff4545;" text="Tallenna" textFill="WHITE" />
             </children>
         </Pane>
         <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="37.0" layoutY="208.0" prefHeight="457.0" prefWidth="274.0" spacing="20.0">
@@ -60,7 +61,7 @@
                     </padding>
                 </Label>
                 <DatePicker fx:id="loppupvmkentta" />
-                <Button fx:id="lisaapainike" mnemonicParsing="false" onAction="#lisaavaraus" text="Lisää" />
+                <Button fx:id="lisaapainike" mnemonicParsing="false" onAction="#lisaavaraus" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
             </children>
         </VBox>
     </children>

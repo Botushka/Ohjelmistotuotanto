@@ -12,6 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="802.0" prefWidth="1052.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <Pane prefHeight="803.0" prefWidth="1055.0" style="-fx-background-color: #1a1a1a;" />
       <TableView fx:id="palvelutable" layoutX="343.0" layoutY="228.0" prefHeight="546.0" prefWidth="694.0">
         <columns>
           <TableColumn fx:id="palveluIdColumn" prefWidth="75.0" text="Palvelu ID" />
@@ -32,17 +33,17 @@
             <TextField fx:id="palvelukuvaus" promptText="Kuvaus" />
             <TextField fx:id="palveluhinta" promptText="Hinta" />
             <TextField fx:id="palvelualv" promptText="Alv." />
-            <Button fx:id="lisaapalvelubtn" alignment="CENTER" mnemonicParsing="false" onAction="#lisaapalvelu" prefHeight="29.0" prefWidth="159.0" style="-fx-background-color: #7156DD;" text="Lisää" textFill="WHITE" />
+            <Button fx:id="lisaapalvelubtn" alignment="CENTER" mnemonicParsing="false" onAction="#lisaapalvelu" prefHeight="29.0" prefWidth="159.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
          </children>
       </VBox>
       <Pane layoutX="338.0" layoutY="127.0" prefHeight="80.0" prefWidth="587.0">
          <children>
             <TextField fx:id="haepalvelu" layoutX="29.0" layoutY="28.0" prefHeight="26.0" prefWidth="223.0" promptText="Hae palvelua" />
-            <Button fx:id="poistapalvelubtn" layoutX="312.0" layoutY="29.0" mnemonicParsing="false" onAction="#poistapalvelu" style="-fx-background-color: #7156DD;" text="Poista" textFill="WHITE" />
-            <Button fx:id="tallennapalvelubtn" layoutX="433.0" layoutY="29.0" mnemonicParsing="false" onAction="#tallennapalvelu" style="-fx-background-color: #7156DD;" text="Tallenna" textFill="WHITE" />
+            <Button fx:id="poistapalvelubtn" layoutX="312.0" layoutY="29.0" mnemonicParsing="false" onAction="#poistapalvelu" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
+            <Button fx:id="tallennapalvelubtn" layoutX="433.0" layoutY="29.0" mnemonicParsing="false" onAction="#tallennapalvelu" style="-fx-background-color: #ff4545;" text="Tallenna" textFill="WHITE" />
          </children>
       </Pane>
-      <Pane layoutX="-2.0" layoutY="-1.0" prefHeight="139.0" prefWidth="1054.0" style="-fx-background-color: #7156DD;">
+      <Pane layoutX="-2.0" layoutY="-1.0" prefHeight="139.0" prefWidth="1054.0" style="-fx-background-color: #1a1a1a;">
          <children>
             <Label layoutX="424.0" layoutY="50.0" text="Palveluiden hallinta" textFill="WHITE">
                <font>

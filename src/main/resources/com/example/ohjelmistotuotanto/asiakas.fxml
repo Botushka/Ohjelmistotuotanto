@@ -12,6 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="811.0" prefWidth="1285.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <Pane prefHeight="817.0" prefWidth="1286.0" style="-fx-background-color: #1a1a1a;" />
       <Pane layoutX="236.0" layoutY="309.0" prefHeight="499.0" prefWidth="1049.0">
          <children>
             <TableView fx:id="asiakasTable" layoutX="-1.0" layoutY="-1.0" prefHeight="499.0" prefWidth="1043.0">
@@ -27,7 +28,7 @@
             </TableView>
          </children>
       </Pane>
-      <Pane prefHeight="215.0" prefWidth="1285.0" style="-fx-background-color: #7156DD;">
+      <Pane prefHeight="215.0" prefWidth="1285.0" style="-fx-background-color: #1a1a1a;">
          <children>
             <Label layoutX="520.0" layoutY="80.0" text="Asiakashallinta" textFill="WHITE">
                <font>
@@ -45,14 +46,14 @@
             <TextField fx:id="emailkentta" promptText="email" />
             <TextField fx:id="puhnrokentta" promptText="puhelinnro" />
             <TextField fx:id="lahiosoitekentta" promptText="lähiosoite" />
-            <Button fx:id="lisaaasiakasnappula" mnemonicParsing="false" onAction="#lisaaasiakas" prefHeight="38.0" prefWidth="92.0" style="-fx-background-color: #7156DD;" text="Lisää" textFill="WHITE" />
+            <Button fx:id="lisaaasiakasnappula" mnemonicParsing="false" onAction="#lisaaasiakas" prefHeight="38.0" prefWidth="92.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
          </children>
       </VBox>
       <Pane layoutX="236.0" layoutY="215.0" prefHeight="93.0" prefWidth="1043.0">
          <children>
             <TextField fx:id="haeasiakas" layoutX="14.0" layoutY="34.0" prefHeight="25.0" prefWidth="323.0" promptText="Hae sukunimellä" />
-            <Button fx:id="poistaasiakasnappula" layoutX="489.0" layoutY="28.0" mnemonicParsing="false" onAction="#poistaasiakas" prefHeight="38.0" prefWidth="65.0" style="-fx-background-color: #7156DD;" text="Poista" textFill="WHITE" />
-            <Button fx:id="muokkaaasiakasnappula" layoutX="382.0" layoutY="28.0" mnemonicParsing="false" onAction="#muokkaaasiakas" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #7156DD;" text="Muokkaa" textFill="WHITE" />
+            <Button fx:id="poistaasiakasnappula" layoutX="489.0" layoutY="28.0" mnemonicParsing="false" onAction="#poistaasiakas" prefHeight="38.0" prefWidth="65.0" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
+            <Button fx:id="muokkaaasiakasnappula" layoutX="382.0" layoutY="28.0" mnemonicParsing="false" onAction="#muokkaaasiakas" prefHeight="38.0" prefWidth="74.0" style="-fx-background-color: #ff4545;" text="Muokkaa" textFill="WHITE" />
          </children>
       </Pane>
    </children>

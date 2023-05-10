@@ -10,14 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="866.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="866.0" prefWidth="1080.0" style="-fx-background-color: #1a1a1a;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="200.0" prefWidth="1080.0" style="-fx-background-color: BLUE;">
+      <Pane prefHeight="200.0" prefWidth="1080.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="476.0" layoutY="87.0" text="Postitoimipaikat" textFill="WHITE">
+            <Label layoutX="461.0" layoutY="80.0" text="Postitoimipaikat" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font size="28.0" />
                </font>
             </Label>
          </children>
@@ -32,9 +31,9 @@
          <children>
             <TextField fx:id="postinroKentta" promptText="Postinro" />
             <TextField fx:id="toimipaikkaKentta" promptText="Toimipaikka" />
-            <Button fx:id="lisaaNappi" mnemonicParsing="false" onAction="#lisaaPostitoimialue" text="Lisää" />
+            <Button fx:id="lisaaNappi" mnemonicParsing="false" onAction="#lisaaPostitoimialue" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
             <TextField promptText="Hae..." />
-            <Button fx:id="poistaNappi" mnemonicParsing="false" onAction="#poistaToimipaikka" text="Poista" />
+            <Button fx:id="poistaNappi" mnemonicParsing="false" onAction="#poistaToimipaikka" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
          </children>
       </VBox>
    </children>

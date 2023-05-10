@@ -11,7 +11,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="1099.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="198.0" prefWidth="1099.0" style="-fx-background-color: #7156DD;">
+      <Pane prefHeight="707.0" prefWidth="1103.0" style="-fx-background-color: #1a1a1a;" />
+      <Pane prefHeight="198.0" prefWidth="1099.0" style="-fx-background-color: #1a1a1a;">
          <children>
             <Label layoutX="422.0" layoutY="65.0" prefHeight="58.0" prefWidth="320.0" text="Laskuhallinta" textFill="WHITE">
                <font>
@@ -34,8 +35,8 @@
       </Pane>
       <Pane layoutX="-1.0" layoutY="199.0" prefHeight="97.0" prefWidth="1099.0">
          <children>
-            <Button fx:id="muokkaalaskunappula" layoutX="524.0" layoutY="27.0" mnemonicParsing="false" onAction="#muokkaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #7156DD;" text="Muokkaa" textFill="WHITE" />
-            <Button fx:id="poistalaskunappula" layoutX="600.0" layoutY="27.0" mnemonicParsing="false" onAction="#poistalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #7156DD;" text="Poista" textFill="WHITE" />
+            <Button fx:id="muokkaalaskunappula" layoutX="524.0" layoutY="27.0" mnemonicParsing="false" onAction="#muokkaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Muokkaa" textFill="WHITE" />
+            <Button fx:id="poistalaskunappula" layoutX="618.0" layoutY="26.0" mnemonicParsing="false" onAction="#poistalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
             <TextField fx:id="haelasku" layoutX="248.0" layoutY="36.0" prefHeight="25.0" prefWidth="245.0" promptText="Hae laskua" />
          </children>
       </Pane>
@@ -43,6 +44,6 @@
       <TextField fx:id="varauskenttaid" layoutX="43.0" layoutY="384.0" promptText="varaus id" />
       <TextField fx:id="summakentta" layoutX="43.0" layoutY="429.0" promptText="summa" />
       <TextField fx:id="alvkentta" layoutX="43.0" layoutY="475.0" promptText="alv" />
-      <Button fx:id="lisaalaskunappula" layoutX="82.0" layoutY="520.0" mnemonicParsing="false" onAction="#lisaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #7156DD;" text="Lisää" textFill="WHITE" />
+      <Button fx:id="lisaalaskunappula" layoutX="82.0" layoutY="520.0" mnemonicParsing="false" onAction="#lisaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
    </children>
 </AnchorPane>

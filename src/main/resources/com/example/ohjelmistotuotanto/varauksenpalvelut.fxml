@@ -13,11 +13,12 @@
 
 <AnchorPane prefHeight="755.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="200.0" prefWidth="1259.0" style="-fx-background-color: BLUE;">
+      <Pane prefHeight="758.0" prefWidth="1259.0" style="-fx-background-color: #1a1a1a;" />
+      <Pane prefHeight="200.0" prefWidth="1259.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="523.0" layoutY="87.0" text="Lisää palveluita varaukseen" textFill="WHITE">
+            <Label layoutX="484.0" layoutY="78.0" text="Lisää palveluita varaukseen" textFill="WHITE">
                <font>
-                  <Font size="18.0" />
+                  <Font size="28.0" />
                </font>
             </Label>
          </children>
@@ -27,10 +28,10 @@
             <ComboBox fx:id="varausidComboBox" editable="true" prefWidth="150.0" promptText="varaus_id" />
             <ComboBox fx:id="palveluidComboBOx" editable="true" prefWidth="150.0" promptText="palvelu_id" />
             <TextField fx:id="lukumaaraKentta" promptText="lukumäärä" />
-            <Button fx:id="lisaaNappain" mnemonicParsing="false" onAction="#lisaaVarattuPalvelu" text="Lisää" />
+            <Button fx:id="lisaaNappain" mnemonicParsing="false" onAction="#lisaaVarattuPalvelu" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
          </children>
       </VBox>
-      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" onAction="#poistaVarauksenPalvelu" text="Poista" />
+      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" onAction="#poistaVarauksenPalvelu" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
       <TextField fx:id="hakuKentta" layoutX="481.0" layoutY="228.0" promptText="Hae..." />
       <TableView fx:id="varatutPalvelutTable" layoutX="432.0" layoutY="281.0" prefHeight="300.0" prefWidth="542.0">
         <columns>
