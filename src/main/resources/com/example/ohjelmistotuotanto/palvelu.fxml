@@ -10,47 +10,49 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="802.0" prefWidth="1052.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1007.0" prefWidth="1534.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="803.0" prefWidth="1055.0" style="-fx-background-color: #1a1a1a;" />
-      <TableView fx:id="palvelutable" layoutX="343.0" layoutY="228.0" prefHeight="546.0" prefWidth="694.0">
-        <columns>
-          <TableColumn fx:id="palveluIdColumn" prefWidth="75.0" text="Palvelu ID" />
-          <TableColumn fx:id="alueIdColumn" prefWidth="75.0" text="Alue ID" />
-            <TableColumn fx:id="nimiColumn" prefWidth="75.0" text="Nimi" />
-            <TableColumn fx:id="tyyppiColumn" prefWidth="75.0" text="Tyyppi" />
-            <TableColumn fx:id="kuvausColumn" prefWidth="75.0" text="Kuvaus" />
-            <TableColumn fx:id="hintaColumn" prefWidth="75.0" text="Hinta" />
-            <TableColumn fx:id="alvColumn" prefWidth="75.0" text="Alv." />
-        </columns>
-      </TableView>
-      <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="60.0" layoutY="256.0" prefHeight="437.0" prefWidth="264.0" spacing="25.0">
+      <Pane layoutX="-2.0" prefHeight="1007.0" prefWidth="1545.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <TextField fx:id="palveluid" promptText="Palvelu ID" />
-            <TextField fx:id="alueid" promptText="Alue ID" />
-            <TextField fx:id="palvelunimi" promptText="Nimi" />
-            <TextField fx:id="palvelutyyppi" promptText="Tyyppi" />
-            <TextField fx:id="palvelukuvaus" promptText="Kuvaus" />
-            <TextField fx:id="palveluhinta" promptText="Hinta" />
-            <TextField fx:id="palvelualv" promptText="Alv." />
-            <Button fx:id="lisaapalvelubtn" alignment="CENTER" mnemonicParsing="false" onAction="#lisaapalvelu" prefHeight="29.0" prefWidth="159.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
-         </children>
-      </VBox>
-      <Pane layoutX="338.0" layoutY="127.0" prefHeight="80.0" prefWidth="587.0">
-         <children>
-            <TextField fx:id="haepalvelu" layoutX="29.0" layoutY="28.0" prefHeight="26.0" prefWidth="223.0" promptText="Hae palvelua" />
-            <Button fx:id="poistapalvelubtn" layoutX="312.0" layoutY="29.0" mnemonicParsing="false" onAction="#poistapalvelu" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
-            <Button fx:id="tallennapalvelubtn" layoutX="433.0" layoutY="29.0" mnemonicParsing="false" onAction="#tallennapalvelu" style="-fx-background-color: #ff4545;" text="Tallenna" textFill="WHITE" />
-         </children>
-      </Pane>
-      <Pane layoutX="-2.0" layoutY="-1.0" prefHeight="139.0" prefWidth="1054.0" style="-fx-background-color: #1a1a1a;">
-         <children>
-            <Label layoutX="424.0" layoutY="50.0" text="Palveluiden hallinta" textFill="WHITE">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
+            <TableView fx:id="palvelutable" layoutX="416.0" layoutY="263.0" prefHeight="546.0" prefWidth="694.0">
+              <columns>
+                <TableColumn fx:id="palveluIdColumn" prefWidth="75.0" text="Palvelu ID" />
+                <TableColumn fx:id="alueIdColumn" prefWidth="75.0" text="Alue ID" />
+                  <TableColumn fx:id="nimiColumn" prefWidth="75.0" text="Nimi" />
+                  <TableColumn fx:id="tyyppiColumn" prefWidth="75.0" text="Tyyppi" />
+                  <TableColumn fx:id="kuvausColumn" prefWidth="75.0" text="Kuvaus" />
+                  <TableColumn fx:id="hintaColumn" prefWidth="75.0" text="Hinta" />
+                  <TableColumn fx:id="alvColumn" prefWidth="75.0" text="Alv." />
+              </columns>
+            </TableView>
+            <Pane layoutX="451.0" layoutY="165.0" prefHeight="80.0" prefWidth="587.0">
+               <children>
+                  <TextField fx:id="haepalvelu" layoutX="26.0" layoutY="29.0" prefHeight="26.0" prefWidth="223.0" promptText="Hae palvelua" />
+                  <Button fx:id="poistapalvelubtn" layoutX="312.0" layoutY="29.0" mnemonicParsing="false" onAction="#poistapalvelu" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
+                  <Button fx:id="tallennapalvelubtn" layoutX="433.0" layoutY="29.0" mnemonicParsing="false" onAction="#tallennapalvelu" style="-fx-background-color: #ff4545;" text="Tallenna" textFill="WHITE" />
+               </children>
+            </Pane>
+            <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="170.0" layoutY="298.0" prefHeight="437.0" prefWidth="264.0" spacing="25.0">
+               <children>
+                  <TextField fx:id="palveluid" promptText="Palvelu ID" />
+                  <TextField fx:id="alueid" promptText="Alue ID" />
+                  <TextField fx:id="palvelunimi" promptText="Nimi" />
+                  <TextField fx:id="palvelutyyppi" promptText="Tyyppi" />
+                  <TextField fx:id="palvelukuvaus" promptText="Kuvaus" />
+                  <TextField fx:id="palveluhinta" promptText="Hinta" />
+                  <TextField fx:id="palvelualv" promptText="Alv." />
+                  <Button fx:id="lisaapalvelubtn" alignment="CENTER" mnemonicParsing="false" onAction="#lisaapalvelu" prefHeight="29.0" prefWidth="159.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
+               </children>
+            </VBox>
+            <Pane layoutX="137.0" layoutY="26.0" prefHeight="139.0" prefWidth="1054.0" style="-fx-background-color: #1a1a1a;">
+               <children>
+                  <Label layoutX="424.0" layoutY="50.0" text="Palveluiden hallinta" textFill="WHITE">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children></Pane>
    </children>
 </AnchorPane>

@@ -9,29 +9,31 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="1033.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="978.0" prefWidth="1497.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="708.0" prefWidth="1036.0" style="-fx-background-color: #1a1a1a;" />
-      <Pane layoutX="-3.0" prefHeight="207.0" prefWidth="1039.0" style="-fx-background-color: #1a1a1a;">
+      <Pane prefHeight="978.0" prefWidth="1497.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="413.0" layoutY="84.0" prefHeight="40.0" prefWidth="234.0" text="Mökkien seuranta" textFill="WHITE">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <TableView fx:id="mokkiseurantaTable" layoutX="449.0" layoutY="207.0" prefHeight="500.0" prefWidth="577.0">
-        <columns>
-          <TableColumn fx:id="seurantavarausid" prefWidth="109.0" text="varaus_id" />
-          <TableColumn fx:id="seurantaasiakasid" prefWidth="88.0" text="asiakas_id" />
-            <TableColumn fx:id="seurantamokkiid" prefWidth="88.0" text="mokki_id" />
-            <TableColumn fx:id="seurantaalkupvm" prefWidth="113.0" text="alku_pvm" />
-            <TableColumn fx:id="seurantaloppupvm" minWidth="1.0" prefWidth="119.0" text="loppu_pvm" />
-        </columns>
-      </TableView>
-      <TextField fx:id="alkupvmtext" layoutX="206.0" layoutY="328.0" promptText="alku pvm" />
-      <TextField fx:id="loppupvmtext" layoutX="206.0" layoutY="382.0" promptText="loppu pvm" />
-      <Button fx:id="poistaseurantanappi" layoutX="236.0" layoutY="440.0" mnemonicParsing="false" onAction="#poistaseuranta" prefHeight="34.0" prefWidth="89.0" style="-fx-background-color: #ff4545;" text="Hae" textFill="WHITE" />
+            <TableView fx:id="mokkiseurantaTable" layoutX="643.0" layoutY="242.0" prefHeight="500.0" prefWidth="577.0">
+              <columns>
+                <TableColumn fx:id="seurantavarausid" prefWidth="109.0" text="varaus_id" />
+                <TableColumn fx:id="seurantaasiakasid" prefWidth="88.0" text="asiakas_id" />
+                  <TableColumn fx:id="seurantamokkiid" prefWidth="88.0" text="mokki_id" />
+                  <TableColumn fx:id="seurantaalkupvm" prefWidth="113.0" text="alku_pvm" />
+                  <TableColumn fx:id="seurantaloppupvm" minWidth="1.0" prefWidth="119.0" text="loppu_pvm" />
+              </columns>
+            </TableView>
+            <Button fx:id="poistaseurantanappi" layoutX="487.0" layoutY="528.0" mnemonicParsing="false" onAction="#poistaseuranta" prefHeight="34.0" prefWidth="89.0" style="-fx-background-color: #ff4545;" text="Hae" textFill="WHITE" />
+            <TextField fx:id="loppupvmtext" layoutX="450.0" layoutY="447.0" promptText="loppu pvm" />
+            <TextField fx:id="alkupvmtext" layoutX="454.0" layoutY="367.0" promptText="alku pvm" />
+            <Pane layoutX="170.0" layoutY="14.0" prefHeight="207.0" prefWidth="1039.0" style="-fx-background-color: #1a1a1a;">
+               <children>
+                  <Label layoutX="413.0" layoutY="84.0" prefHeight="40.0" prefWidth="234.0" text="Mökkien seuranta" textFill="WHITE">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children></Pane>
    </children>
 </AnchorPane>

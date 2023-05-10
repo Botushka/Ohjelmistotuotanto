@@ -9,41 +9,43 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="705.0" prefWidth="1099.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="989.0" prefWidth="1504.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="707.0" prefWidth="1103.0" style="-fx-background-color: #1a1a1a;" />
-      <Pane prefHeight="198.0" prefWidth="1099.0" style="-fx-background-color: #1a1a1a;">
+      <Pane prefHeight="989.0" prefWidth="1504.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="422.0" layoutY="65.0" prefHeight="58.0" prefWidth="320.0" text="Laskuhallinta" textFill="WHITE">
-               <font>
-                  <Font size="46.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane layoutX="229.0" layoutY="294.0" prefHeight="412.0" prefWidth="869.0">
-         <children>
-            <TableView fx:id="laskutableview" layoutX="3.0" layoutY="1.0" prefHeight="412.0" prefWidth="869.0">
-              <columns>
-                <TableColumn fx:id="laskuidcolumn" prefWidth="77.0" text="lasku id" />
-                <TableColumn fx:id="laskuvarausidcolumn" minWidth="0.0" prefWidth="73.0" text="varaus id" />
-                  <TableColumn fx:id="laskusummacolumn" minWidth="0.0" prefWidth="121.0" text="summa" />
-                  <TableColumn fx:id="laskualvcolumn" minWidth="0.0" prefWidth="95.0" text="alv" />
-              </columns>
-            </TableView>
-         </children>
-      </Pane>
-      <Pane layoutX="-1.0" layoutY="199.0" prefHeight="97.0" prefWidth="1099.0">
-         <children>
-            <Button fx:id="muokkaalaskunappula" layoutX="524.0" layoutY="27.0" mnemonicParsing="false" onAction="#muokkaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Muokkaa" textFill="WHITE" />
-            <Button fx:id="poistalaskunappula" layoutX="618.0" layoutY="26.0" mnemonicParsing="false" onAction="#poistalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
-            <TextField fx:id="haelasku" layoutX="248.0" layoutY="36.0" prefHeight="25.0" prefWidth="245.0" promptText="Hae laskua" />
-         </children>
-      </Pane>
-      <TextField fx:id="laskukenttaid" layoutX="43.0" layoutY="340.0" promptText="lasku id" />
-      <TextField fx:id="varauskenttaid" layoutX="43.0" layoutY="384.0" promptText="varaus id" />
-      <TextField fx:id="summakentta" layoutX="43.0" layoutY="429.0" promptText="summa" />
-      <TextField fx:id="alvkentta" layoutX="43.0" layoutY="475.0" promptText="alv" />
-      <Button fx:id="lisaalaskunappula" layoutX="82.0" layoutY="520.0" mnemonicParsing="false" onAction="#lisaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
+            <Pane layoutX="357.0" layoutY="320.0" prefHeight="412.0" prefWidth="869.0">
+               <children>
+                  <TableView fx:id="laskutableview" prefHeight="412.0" prefWidth="869.0">
+                    <columns>
+                      <TableColumn fx:id="laskuidcolumn" prefWidth="77.0" text="lasku id" />
+                      <TableColumn fx:id="laskuvarausidcolumn" minWidth="0.0" prefWidth="73.0" text="varaus id" />
+                        <TableColumn fx:id="laskusummacolumn" minWidth="0.0" prefWidth="121.0" text="summa" />
+                        <TableColumn fx:id="laskualvcolumn" minWidth="0.0" prefWidth="95.0" text="alv" />
+                    </columns>
+                  </TableView>
+               </children>
+            </Pane>
+            <TextField fx:id="laskukenttaid" layoutX="147.0" layoutY="363.0" promptText="lasku id" />
+            <TextField fx:id="varauskenttaid" layoutX="145.0" layoutY="406.0" promptText="varaus id" />
+            <TextField fx:id="summakentta" layoutX="145.0" layoutY="443.0" promptText="summa" />
+            <TextField fx:id="alvkentta" layoutX="147.0" layoutY="482.0" promptText="alv" />
+            <Button fx:id="lisaalaskunappula" layoutX="176.0" layoutY="542.0" mnemonicParsing="false" onAction="#lisaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
+            <Pane layoutX="340.0" layoutY="216.0" prefHeight="97.0" prefWidth="1099.0">
+               <children>
+                  <Button fx:id="muokkaalaskunappula" layoutX="524.0" layoutY="27.0" mnemonicParsing="false" onAction="#muokkaalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Muokkaa" textFill="WHITE" />
+                  <Button fx:id="poistalaskunappula" layoutX="618.0" layoutY="26.0" mnemonicParsing="false" onAction="#poistalasku" prefHeight="34.0" prefWidth="72.0" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
+                  <TextField fx:id="haelasku" layoutX="248.0" layoutY="36.0" prefHeight="25.0" prefWidth="245.0" promptText="Hae laskua" />
+               </children>
+            </Pane>
+            <Pane layoutX="203.0" layoutY="14.0" prefHeight="198.0" prefWidth="1099.0" style="-fx-background-color: #1a1a1a;">
+               <children>
+                  <Label layoutX="422.0" layoutY="65.0" prefHeight="58.0" prefWidth="320.0" text="Laskuhallinta" textFill="WHITE">
+                     <font>
+                        <Font size="46.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children></Pane>
    </children>
 </AnchorPane>

@@ -10,34 +10,36 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1068.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="993.0" prefWidth="1483.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="793.0" prefWidth="1071.0" style="-fx-background-color: #1a1a1a;" />
+      <Pane prefHeight="993.0" prefWidth="1483.0" style="-fx-background-color: #1a1a1a;">
+         <children>
+            <TableView fx:id="alueTable" layoutX="730.0" layoutY="207.0" prefHeight="597.0" prefWidth="372.0">
+              <columns>
+                <TableColumn fx:id="idalueColumn" prefWidth="163.0" text="alue_id" />
+                <TableColumn fx:id="nimiAlueColumn" prefWidth="208.0" text="alue nimi" />
+              </columns>
+            </TableView>
+            <Pane layoutX="354.0" layoutY="198.0" prefHeight="597.0" prefWidth="348.0" style="-fx-border-color: #1a1a1a;">
+               <children>
+                  <TextField fx:id="alueidKentta" editable="false" layoutX="99.0" layoutY="41.0" promptText="Alue ID (Auto generointi)" style="-fx-border-color: gray;" />
+                  <TextField fx:id="aluenimiKentta" layoutX="99.0" layoutY="103.0" promptText="Alue nimi" style="-fx-border-color: gray;" />
+                  <Button fx:id="addnappi" layoutX="70.0" layoutY="181.0" mnemonicParsing="false" onAction="#addAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="#f7f7f7" />
+                  <Button fx:id="delnappi" layoutX="155.0" layoutY="181.0" mnemonicParsing="false" onAction="#delAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
+                  <Button fx:id="editNappi" layoutX="250.0" layoutY="181.0" mnemonicParsing="false" onAction="#editAlue" style="-fx-background-color: #ff4545;" text="Muokka" textFill="WHITE" />
+                  <TextField fx:id="aluehaeKentta" layoutX="109.0" layoutY="257.0" promptText="Hae..." style="-fx-border-color: gray;" />
+               </children>
+            </Pane>
+            <Pane layoutX="196.0" layoutY="14.0" prefHeight="193.0" prefWidth="1068.0" style="-fx-background-color: #1a1a1a;">
+               <children>
+                  <Label alignment="CENTER" layoutX="396.0" layoutY="78.0" prefHeight="38.0" prefWidth="215.0" text="Alueiden hallinta" textFill="WHITE">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children></Pane>
       <VBox layoutX="149.0" layoutY="103.0" prefHeight="298.0" prefWidth="162.0" />
-      <TableView fx:id="alueTable" layoutX="499.0" layoutY="191.0" prefHeight="597.0" prefWidth="372.0">
-        <columns>
-          <TableColumn fx:id="idalueColumn" prefWidth="163.0" text="alue_id" />
-          <TableColumn fx:id="nimiAlueColumn" prefWidth="208.0" text="alue nimi" />
-        </columns>
-      </TableView>
-      <Pane layoutX="-1.0" layoutY="-1.0" prefHeight="193.0" prefWidth="1068.0" style="-fx-background-color: #1a1a1a;">
-         <children>
-            <Label alignment="CENTER" layoutX="396.0" layoutY="78.0" prefHeight="38.0" prefWidth="215.0" text="Alueiden hallinta" textFill="WHITE">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane layoutX="149.0" layoutY="191.0" prefHeight="597.0" prefWidth="348.0" style="-fx-border-color: #1a1a1a;">
-         <children>
-            <TextField fx:id="alueidKentta" editable="false" layoutX="99.0" layoutY="41.0" promptText="Alue ID (Auto generointi)" style="-fx-border-color: gray;" />
-            <TextField fx:id="aluenimiKentta" layoutX="99.0" layoutY="103.0" promptText="Alue nimi" style="-fx-border-color: gray;" />
-            <Button fx:id="addnappi" layoutX="70.0" layoutY="181.0" mnemonicParsing="false" onAction="#addAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #ff4545;" text="Lisää" textFill="#f7f7f7" />
-            <Button fx:id="delnappi" layoutX="155.0" layoutY="181.0" mnemonicParsing="false" onAction="#delAlue" prefHeight="25.0" prefWidth="59.0" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
-            <Button fx:id="editNappi" layoutX="250.0" layoutY="181.0" mnemonicParsing="false" onAction="#editAlue" style="-fx-background-color: #ff4545;" text="Muokka" textFill="WHITE" />
-            <TextField fx:id="aluehaeKentta" layoutX="109.0" layoutY="257.0" promptText="Hae..." style="-fx-border-color: gray;" />
-         </children>
-      </Pane>
    </children>
 </AnchorPane>

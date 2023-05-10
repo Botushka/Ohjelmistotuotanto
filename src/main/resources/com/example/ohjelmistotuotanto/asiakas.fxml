@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="811.0" prefWidth="1285.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="983.0" prefWidth="1470.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="817.0" prefWidth="1286.0" style="-fx-background-color: #1a1a1a;" />
+      <Pane prefHeight="983.0" prefWidth="1470.0" style="-fx-background-color: #1a1a1a;" />
       <Pane layoutX="236.0" layoutY="309.0" prefHeight="499.0" prefWidth="1049.0">
          <children>
             <TableView fx:id="asiakasTable" layoutX="-1.0" layoutY="-1.0" prefHeight="499.0" prefWidth="1043.0">

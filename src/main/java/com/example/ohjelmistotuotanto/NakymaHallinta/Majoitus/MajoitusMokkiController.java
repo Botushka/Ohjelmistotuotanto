@@ -149,6 +149,7 @@ public class MajoitusMokkiController extends BorderPane {
 
 
     private List<Varaus> haeVarauksetTietokannasta() throws SQLException {
+
         try {
             List<Varaus> varaus = new ArrayList<>();
             DatabaseManager dbmanager = new DatabaseManager(url, user, password);

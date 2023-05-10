@@ -44,7 +44,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 1400, 1000);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Varausjärjestelmä");
-        //root.setCenter(new MokkiHallintaController());
+        root.setCenter(new MajoitusHallintaController());
         primaryStage.show();
     }
 

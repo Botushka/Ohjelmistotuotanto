@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="917.0" prefWidth="1349.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="981.0" prefWidth="1495.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-      <Pane prefHeight="918.0" prefWidth="1349.0" style="-fx-background-color: #1a1a1a;" />
+      <Pane prefHeight="981.0" prefWidth="1495.0" style="-fx-background-color: #1a1a1a;" />
       <GridPane layoutX="363.0" layoutY="177.0" prefHeight="578.0" prefWidth="986.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -59,7 +59,7 @@
       </GridPane>
       <Pane prefHeight="177.0" prefWidth="1349.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="559.0" layoutY="57.0" prefHeight="57.0" prefWidth="262.0" text="Mökkien hallinta" textFill="WHITE">
+            <Label layoutX="558.0" layoutY="50.0" prefHeight="57.0" prefWidth="305.0" text="Mökkien hallinta" textFill="WHITE">
                <font>
                   <Font size="38.0" />
                </font>

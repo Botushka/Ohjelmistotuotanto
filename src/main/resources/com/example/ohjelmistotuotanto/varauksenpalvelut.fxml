@@ -11,34 +11,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="755.0" prefWidth="1259.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="1039.0" prefWidth="1397.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="758.0" prefWidth="1259.0" style="-fx-background-color: #1a1a1a;" />
-      <Pane prefHeight="200.0" prefWidth="1259.0" style="-fx-background-color: #1a1a1a;">
+      <Pane prefHeight="1039.0" prefWidth="1397.0" style="-fx-background-color: #1a1a1a;">
          <children>
-            <Label layoutX="484.0" layoutY="78.0" text="Lisää palveluita varaukseen" textFill="WHITE">
-               <font>
-                  <Font size="28.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="87.0" layoutY="233.0" prefHeight="503.0" prefWidth="288.0" spacing="25.0">
-         <children>
-            <ComboBox fx:id="varausidComboBox" editable="true" prefWidth="150.0" promptText="varaus_id" />
-            <ComboBox fx:id="palveluidComboBOx" editable="true" prefWidth="150.0" promptText="palvelu_id" />
-            <TextField fx:id="lukumaaraKentta" promptText="lukumäärä" />
-            <Button fx:id="lisaaNappain" mnemonicParsing="false" onAction="#lisaaVarattuPalvelu" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
-         </children>
-      </VBox>
-      <Button fx:id="poistaNappain" layoutX="745.0" layoutY="228.0" mnemonicParsing="false" onAction="#poistaVarauksenPalvelu" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
-      <TextField fx:id="hakuKentta" layoutX="481.0" layoutY="228.0" promptText="Hae..." />
-      <TableView fx:id="varatutPalvelutTable" layoutX="432.0" layoutY="281.0" prefHeight="300.0" prefWidth="542.0">
-        <columns>
-          <TableColumn fx:id="varausidColumn" prefWidth="163.0" text="Varaus ID" />
-          <TableColumn fx:id="palveluidColumn" prefWidth="180.0" text="Palvelu ID" />
-            <TableColumn fx:id="lukumaaraColumn" prefWidth="198.0" text="lkm" />
-        </columns>
-      </TableView>
+            <TableView fx:id="varatutPalvelutTable" layoutX="569.0" layoutY="358.0" prefHeight="300.0" prefWidth="542.0">
+              <columns>
+                <TableColumn fx:id="varausidColumn" prefWidth="163.0" text="Varaus ID" />
+                <TableColumn fx:id="palveluidColumn" prefWidth="180.0" text="Palvelu ID" />
+                  <TableColumn fx:id="lukumaaraColumn" prefWidth="198.0" text="lkm" />
+              </columns>
+            </TableView>
+            <TextField fx:id="hakuKentta" layoutX="664.0" layoutY="304.0" promptText="Hae..." />
+            <Button fx:id="poistaNappain" layoutX="877.0" layoutY="297.0" mnemonicParsing="false" onAction="#poistaVarauksenPalvelu" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
+            <Button fx:id="lisaaNappain" layoutX="419.0" layoutY="572.0" mnemonicParsing="false" onAction="#lisaaVarattuPalvelu" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
+            <TextField fx:id="lukumaaraKentta" layoutX="370.0" layoutY="518.0" promptText="lukumäärä" />
+            <ComboBox fx:id="palveluidComboBOx" editable="true" layoutX="371.0" layoutY="459.0" prefWidth="150.0" promptText="palvelu_id" />
+            <ComboBox fx:id="varausidComboBox" editable="true" layoutX="371.0" layoutY="408.0" prefWidth="150.0" promptText="varaus_id" />
+            <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="281.0" layoutY="233.0" prefHeight="503.0" prefWidth="288.0" spacing="25.0" />
+            <Pane layoutX="-8.0" layoutY="69.0" prefHeight="200.0" prefWidth="1259.0" style="-fx-background-color: #1a1a1a;">
+               <children>
+                  <Label layoutX="484.0" layoutY="78.0" text="Lisää palveluita varaukseen" textFill="WHITE">
+                     <font>
+                        <Font size="28.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children></Pane>
    </children>
 </AnchorPane>
