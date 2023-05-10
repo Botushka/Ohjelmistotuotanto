@@ -5,6 +5,7 @@ import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakasHall
 import com.example.ohjelmistotuotanto.NakymaHallinta.AsiakasHallinta.AsiakashallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.LaskuHallinta.LaskuHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusHallintaController;
+import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusMokkiController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus.MajoitusvarausHallintaView;
 import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.MokkiHallintaController;
 import com.example.ohjelmistotuotanto.NakymaHallinta.Palvelu.PalveluHallintaController;
@@ -57,7 +58,6 @@ public class Main extends Application {
         });
 
 
-
         MokkiMenu.getItems().addAll(MokkiMenuItem2);
 
         Menu AlueMenu = new Menu("Alue");
@@ -74,9 +74,12 @@ public class Main extends Application {
 
         Menu majoitusvarausMenu = new Menu("Majoitusvaraus");
         MenuItem majoitusvarausMenuItem = new MenuItem("Hallinta");
+        MenuItem majoitusvarausSeurantaMenuitem = new MenuItem("Majoitus seuranta");
         MajoitusHallintaController majoitusHallintaController = new MajoitusHallintaController();
+        MajoitusMokkiController majoitusMokkiController = new MajoitusMokkiController();
         majoitusvarausMenuItem.setOnAction(e -> root.setCenter(majoitusHallintaController));
-        majoitusvarausMenu.getItems().add(majoitusvarausMenuItem);
+        majoitusvarausSeurantaMenuitem.setOnAction(e -> root.setCenter(majoitusMokkiController));
+        majoitusvarausMenu.getItems().addAll(majoitusvarausMenuItem, majoitusvarausSeurantaMenuitem);
 
         Menu asiakasMenu = new Menu("Asiakashallinta");
         MenuItem asiakasMenuItem = new MenuItem("Hallinta");

@@ -1,5 +1,6 @@
 package com.example.ohjelmistotuotanto.NakymaHallinta.Majoitus;
 import com.example.ohjelmistotuotanto.DatabaseManager;
+import com.example.ohjelmistotuotanto.NakymaHallinta.MokkiHallinta.Mokki;
 import com.example.ohjelmistotuotanto.Olioluokat.Palvelu;
 import com.example.ohjelmistotuotanto.Olioluokat.Varaus;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -118,8 +119,7 @@ public class MajoitusHallintaController extends BorderPane
 
 
 
-    public void initialize()
-    {
+    public void initialize() throws SQLException {
         try
         {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/vn","root","");
@@ -355,12 +355,27 @@ public class MajoitusHallintaController extends BorderPane
     }
 
 
-    private List<Varaus> haeVarauksetTietokannasta()
-    {
+    private List<Varaus> haeVarauksetTietokannasta() throws SQLException {
         List<Varaus> varaus = new ArrayList<>();
+        DatabaseManager dbmanager = new DatabaseManager(url, user, password);
+        ResultSet rs = dbmanager.retrieveData("varaus", new String[]{"varaus_id", "asiakas_id", "mokki_mokki_id", "varattu_pvm", "vahvistus_pvm", "varattu_alkupvm", "varattu_loppupvm"});
+
+        while (rs.next()) {
+            int varausid = rs.getInt("varaus_id");
+            int alueId = rs.getInt("asiakas_id");
+            int postinro = rs.getInt("mokki_mokki_id");
+            Date mokkinimi = rs.getDate("varattu_pvm");
+            Date katuosoite = rs.getDate("vahvistus_pvm");
+            Date hinta = rs.getDate("varattu_alkupvm");
+            Date henkilomaara = rs.getDate("varattu_loppupvm");
+            varaus.add(new Varaus(varausid, alueId, postinro, mokkinimi, katuosoite, hinta, henkilomaara));
+
+        }
+        rs.close();
 
         return varaus;
     }
+
     @FXML
     public void lisaavaraus(ActionEvent event) {
 
