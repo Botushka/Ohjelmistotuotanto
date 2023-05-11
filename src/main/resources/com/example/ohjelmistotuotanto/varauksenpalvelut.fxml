@@ -24,11 +24,13 @@
             </TableView>
             <TextField fx:id="hakuKentta" layoutX="664.0" layoutY="304.0" promptText="Hae..." />
             <Button fx:id="poistaNappain" layoutX="877.0" layoutY="297.0" mnemonicParsing="false" onAction="#poistaVarauksenPalvelu" style="-fx-background-color: #ff4545;" text="Poista" textFill="WHITE" />
-            <Button fx:id="lisaaNappain" layoutX="419.0" layoutY="572.0" mnemonicParsing="false" onAction="#lisaaVarattuPalvelu" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
-            <TextField fx:id="lukumaaraKentta" layoutX="370.0" layoutY="518.0" promptText="lukumäärä" />
-            <ComboBox fx:id="palveluidComboBOx" editable="true" layoutX="371.0" layoutY="459.0" prefWidth="150.0" promptText="palvelu_id" />
-            <ComboBox fx:id="varausidComboBox" editable="true" layoutX="371.0" layoutY="408.0" prefWidth="150.0" promptText="varaus_id" />
-            <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="281.0" layoutY="233.0" prefHeight="503.0" prefWidth="288.0" spacing="25.0" />
+            <VBox alignment="TOP_CENTER" fillWidth="false" layoutX="281.0" layoutY="358.0" prefHeight="378.0" prefWidth="288.0" spacing="25.0">
+               <children>
+                  <ComboBox fx:id="varausidComboBox" editable="true" prefWidth="150.0" promptText="varaus_id" />
+                  <ComboBox fx:id="palveluidComboBOx" editable="true" prefWidth="150.0" promptText="palvelu_id" />
+                  <TextField fx:id="lukumaaraKentta" promptText="lukumäärä" />
+                  <Button fx:id="lisaaNappain" mnemonicParsing="false" onAction="#lisaaVarattuPalvelu" style="-fx-background-color: #ff4545;" text="Lisää" textFill="WHITE" />
+               </children></VBox>
             <Pane layoutX="-8.0" layoutY="69.0" prefHeight="200.0" prefWidth="1259.0" style="-fx-background-color: #1a1a1a;">
                <children>
                   <Label layoutX="484.0" layoutY="78.0" text="Lisää palveluita varaukseen" textFill="WHITE">
